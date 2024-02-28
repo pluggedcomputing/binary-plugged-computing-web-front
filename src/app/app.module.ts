@@ -45,6 +45,10 @@ import { ScreenSixLevelEightComponent } from './components/levels/eight/screen-s
 import { ScreenSevenLevelEightComponent } from './components/levels/eight/screen-seven-level-eight/screen-seven-level-eight.component';
 import { ScreenEightLevelEightComponent } from './components/levels/eight/screen-eight-level-eight/screen-eight-level-eight.component';
 import { ScreenNineLevelEightComponent } from './components/levels/eight/screen-nine-level-eight/screen-nine-level-eight.component';
+import { EmailInputComponent } from './components/email-input/email-input.component';
+import { UserFeedbackQuestionComponent } from './components/user-feedback-question/user-feedback-question.component';
+import { HttpClientModule } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -87,7 +91,10 @@ import { ScreenNineLevelEightComponent } from './components/levels/eight/screen-
     ScreenSixLevelEightComponent,
     ScreenSevenLevelEightComponent,
     ScreenEightLevelEightComponent,
-    ScreenNineLevelEightComponent
+    ScreenNineLevelEightComponent,
+    EmailInputComponent,
+    UserFeedbackQuestionComponent,
+   
   ],
   imports: [
     BrowserModule,
@@ -95,7 +102,9 @@ import { ScreenNineLevelEightComponent } from './components/levels/eight/screen-
     BrowserAnimationsModule,
     NgbModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule,
+    RouterModule
   ],
   providers: [],
   bootstrap: [AppComponent]

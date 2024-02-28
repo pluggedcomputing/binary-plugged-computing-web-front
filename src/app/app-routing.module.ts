@@ -38,9 +38,14 @@ import { ScreenFourLevelTwoComponent } from './components/levels/two/screen-four
 import { ScreenOneLevelTwoComponent } from './components/levels/two/screen-one-level-two/screen-one-level-two.component';
 import { ScreenThreeLevelTwoComponent } from './components/levels/two/screen-three-level-two/screen-three-level-two.component';
 import { ScreenTwoLevelTwoComponent } from './components/levels/two/screen-two-level-two/screen-two-level-two.component';
+import { EmailInputComponent } from './components/email-input/email-input.component';
+import { UserFeedbackQuestionComponent } from './components/user-feedback-question/user-feedback-question.component';
+
 
 const routes: Routes = [
   {path: '', pathMatch: 'full', component: HomeComponent},
+  {path: "email-input",  component: EmailInputComponent},
+  {path: "user-feedback-question", component: UserFeedbackQuestionComponent},
   {path: 'fases', component: LevelSelectionComponent},
   {path: 'fase-1-1', component: ScreenOneLevelOneComponent},
   {path: 'fase-1-2', component: ScreenTwoLevelOneComponent},

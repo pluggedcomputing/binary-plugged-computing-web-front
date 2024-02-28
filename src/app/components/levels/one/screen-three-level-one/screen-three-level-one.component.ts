@@ -2,6 +2,8 @@ import { ToastService } from '../../toast.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { Question } from 'src/app/models/question.model';
+import { QuestionsService } from 'src/app/service/question/questions.service';
 
 @Component({
   selector: 'app-screen-three-level-one',
@@ -46,12 +48,21 @@ export class ScreenThreeLevelOneComponent implements OnInit {
   btnClass4: string = "";
 
   attempts: number = 0;
-
+  ///
+  idUser: string = "test";
+  idApp: string = "WEB-BINARIOS"
+  phaseActivity: string = "1"
+  numberActivity: string = "1";
+  typeOfQuestion: string = "MULTIPLA ESCOLHA"
+  expectedResponse: string = "Possuem metade do valor anterior"
+  dateResponse: string = "TESTE: 04/06/2003";
+  ///
   question: string = "O que você percebeu sobre o número de pontos nos cartões?";
 
   answers: string[] = ["Possuem metade do valor anterior", "São valores aleatórios", "São a soma do próximo com o anterior", "Estão em ordem crescente"];
+ 
 
-  constructor(private router: Router, public toastService: ToastService) {
+  constructor(private router: Router, public toastService: ToastService, private questionsService: QuestionsService) {
 
   }
 
@@ -74,30 +85,76 @@ export class ScreenThreeLevelOneComponent implements OnInit {
     this.toggleBynaries();
   }
 
-  changeAnswers(value: string, btn: number): void {
-    if(value === "Possuem metade do valor anterior") {
-      this.buttonClass(btn, true);
-      setTimeout(() => {
+  //////
+
+  processAnswer(answer: string, btn: number): void {
+    if (answer == this.expectedResponse){
+      if (this.numberActivity == "1"){
+        this.handleFirstAnswer(btn);
+      } else if (this.numberActivity == "2"){
+        this.handleSecondAnswer(btn);
+      } else if (this.numberActivity == "3"){
+        this.handleThirdAnswer(btn);
+      }
+
+      this.processQuestionResponse(answer, true);
+     
+
+    } else{
+      this.handleIncorrectAnswer(answer);
+     
+    }
+}
+
+processQuestionResponse(userResponse: string, isCorrect: boolean): void {
+  const question: Question = new Question(this.idUser,this.idApp,this.phaseActivity,this.numberActivity,userResponse,this.expectedResponse,isCorrect,this.dateResponse,this.typeOfQuestion);
+  this.questionsService.saveResponseQuestion(question).subscribe(
+    response => {
+      console.log("Question saved successfully:", response);
+    },
+    error => {
+      console.error("Error saving question:", error);
+    }
+  );
+}
+
+handleFirstAnswer(btn: number): void {
+    this.buttonClass(btn, true);
+    setTimeout(() => {
         this.answers = ["24", "20", "32", "18"];
         this.question = "Quantos pontos teria o próximo cartão à esquerda?";
+        this.numberActivity = "2";
+        this.expectedResponse = "32"
         this.answers.sort(() => Math.random() - 0.5);
-      },1000);
-    } else if(value === "32") {
-        this.buttonClass(btn, true);
-        setTimeout(() => {
-          this.answers = ["01101", "10001", "10011", "01001"];
-          this.question = "Como seria o número 17 em binário? <br> Dica: veja os números abaixo dos cartões.";
-          this.answers.sort(() => Math.random() - 0.5);
-        },1000);
-    } else if(value === "10001") {
-        this.buttonClass(btn, true);
-        setTimeout(() => {
-          this.router.navigate(['fase-1-4']);
-        },1000);
-    } else {
-        this.buttonClass(btn, false);
-    }
-  }
+    }, 1000);
+}
+
+handleSecondAnswer(btn: number): void {
+    this.buttonClass(btn, true);
+    setTimeout(() => {
+        this.answers = ["01101", "10001", "10011", "01001"];
+        this.question = "Como seria o número 17 em binário? <br> Dica: veja os números abaixo dos cartões.";
+        this.numberActivity = "3";
+        this.expectedResponse = "10001"
+        this.answers.sort(() => Math.random() - 0.5);
+    }, 1000);
+}
+
+handleThirdAnswer(btn: number): void {
+    this.buttonClass(btn, true);
+    setTimeout(() => {
+        this.router.navigate(['fase-1-4']);
+    }, 1000);
+}
+
+handleIncorrectAnswer(answer: string): void {
+    this.toastService.show('Tente outra vez.');
+    this.attempts += 1;
+    console.log(this.attempts);
+    this.processQuestionResponse(answer,false);
+}
+//////
+  
 
   toggleBynaries():void {
     if(this.flip1 === 'active') {
@@ -131,13 +188,7 @@ export class ScreenThreeLevelOneComponent implements OnInit {
     }
   }
 
-  pickAnswer(answer: string): void {
-    if(answer !== "Possuem metade do valor anterior" && answer !== "32" && answer !== "10001") {
-      this.toastService.show('Tente outra vez.');
-      this.attempts += 1;
-      console.log(this.attempts);
-    }
-  }
+
 
   buttonClass(button: number, status: boolean): void {
     if(button == 1) {
