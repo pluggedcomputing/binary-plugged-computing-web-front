@@ -7,11 +7,16 @@ import { User } from 'src/app/models/user.model';
 })
 export class EmailInputService {
 
+  email: string = "";
   private readonly API = 'api/user';
 
   constructor(private httpClient: HttpClient) { }
   
+ 
+
   saveUser(user: User) {
     return this.httpClient.post<User>(this.API, user);
   }
+
+  
 }

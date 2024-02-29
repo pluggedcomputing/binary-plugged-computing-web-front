@@ -32,7 +32,29 @@ export class EmailInputComponent {
       },
       error => {
         console.error("Error saving user:", error);
+        
       }
     );
+    this.emailInputService.email = this.userEmail;
   }
+
+  submitUserAnonymous(){
+    
+    const user: User = { email: "Anonymous"};
+    
+    this.emailInputService.saveUser(user).subscribe(
+      response => {
+        console.log("User saved successfully:", response);
+      },
+      error => {
+        console.error("Error saving user:", error);
+        
+      }
+    );
+    this.emailInputService.email = "Anonymous";
+    this.router.navigate(['/fases']);
+      
+  }
+
+  
 }

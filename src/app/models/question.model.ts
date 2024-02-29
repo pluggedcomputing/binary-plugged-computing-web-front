@@ -6,10 +6,10 @@ export class Question {
   private userResponse: string;
   private expectedResponse: string;
   private isCorrect: boolean;
-  private dateResponse: string;
+  private dateResponse: Date;
   private typeOfQuestion: string;
 
-  constructor(idUser: string, idApp: string, phaseActivity: string, numberActivity: string, userResponse: string, expectedResponse: string, isCorrect: boolean, dateResponse: string, typeOfQuestion: string) {
+  constructor(idUser: string, idApp: string, phaseActivity: string, numberActivity: string, userResponse: string, expectedResponse: string, isCorrect: boolean, dateResponse: Date, typeOfQuestion: string) {
     this.idUser = idUser;
     this.idApp = idApp;
     this.phaseActivity = phaseActivity;
@@ -46,11 +46,11 @@ export class Question {
       this.expectedResponse = expectedResponse;
   }
 
-  setIsCorrect(isCorrect: boolean): void {
+  setIsCorrects(isCorrect: boolean): void {
       this.isCorrect = isCorrect;
   }
 
-  setDateResponse(dateResponse: string): void {
+  setDateResponse(dateResponse: Date): void {
       this.dateResponse = dateResponse;
   }
 

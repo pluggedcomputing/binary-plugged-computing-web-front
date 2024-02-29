@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Question } from 'src/app/models/question.model';
 import { QuestionsService } from 'src/app/service/question/questions.service';
+import { EmailInputService } from 'src/app/service/email/email-input.service';
 
 @Component({
   selector: 'app-screen-three-level-one',
@@ -49,21 +50,27 @@ export class ScreenThreeLevelOneComponent implements OnInit {
 
   attempts: number = 0;
   ///
-  idUser: string = "test";
+  idUser: string = this.emailInputService.email
   idApp: string = "WEB-BINARIOS"
   phaseActivity: string = "1"
   numberActivity: string = "1";
   typeOfQuestion: string = "MULTIPLA ESCOLHA"
   expectedResponse: string = "Possuem metade do valor anterior"
-  dateResponse: string = "TESTE: 04/06/2003";
+  dateResponse: Date;
   ///
   question: string = "O que você percebeu sobre o número de pontos nos cartões?";
 
   answers: string[] = ["Possuem metade do valor anterior", "São valores aleatórios", "São a soma do próximo com o anterior", "Estão em ordem crescente"];
  
 
-  constructor(private router: Router, public toastService: ToastService, private questionsService: QuestionsService) {
-
+  constructor(
+    private router: Router, 
+    public toastService: ToastService,
+     private questionsService: QuestionsService, 
+     private emailInputService: EmailInputService,
+     
+     ) {
+      this.dateResponse = new Date();
   }
 
   ngOnInit(): void {
@@ -101,7 +108,7 @@ export class ScreenThreeLevelOneComponent implements OnInit {
      
 
     } else{
-      this.handleIncorrectAnswer(answer);
+      this.handleIncorrectAnswer(answer, btn);
      
     }
 }
@@ -147,7 +154,8 @@ handleThirdAnswer(btn: number): void {
     }, 1000);
 }
 
-handleIncorrectAnswer(answer: string): void {
+handleIncorrectAnswer(answer: string, btn: number): void {
+    this.buttonClass(btn, false);
     this.toastService.show('Tente outra vez.');
     this.attempts += 1;
     console.log(this.attempts);

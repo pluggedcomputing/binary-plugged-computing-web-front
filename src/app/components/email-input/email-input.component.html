@@ -16,6 +16,10 @@
         <button type="submit">Enviar</button>
       </form>
       <br>
+      <form (ngSubmit)="submitUserAnonymous()">
+        <button type="submit">Não desejo enviar</button>
+      </form>
+      <br>
       <span *ngIf="!userEmail && submitted" class="error-message">Por favor, digite seu e-mail.</span>
     </div>
   </div>
