@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastService } from '../../toast.service';
+import { Question } from 'src/app/models/question.model';
+import { QuestionsService } from 'src/app/service/question/questions.service';
+import { EmailInputService } from 'src/app/service/email/email-input.service';
 
 @Component({
   selector: 'app-screen-three-level-three',
@@ -15,13 +18,28 @@ export class ScreenThreeLevelThreeComponent implements OnInit {
   imageRef: number | undefined;
 
   attempts: number = 0;
+/// Variáveis para o DB
+idUser: string = this.emailInputService.email
+idApp: string = "WEB-BINARIOS 1.0"
+phaseActivity: string = "3"
+numberActivity: string = "1";
+typeOfQuestion: string = "ABERTA"
+expectedResponse: string = "9"
+dateResponse: Date;
+  ///
 
   question: string = "Ao invés de 1 e 0, poderíamos usar outros códigos para representar cartões virados ou não. Considerando isso, que valor decimal representariam esses códigos? Tente lembrar a quantidade de pontos em cada cartão para fazer essa conversão.";
 
   answer: any;
 
-  constructor(private router: Router, public toastService: ToastService, private fb: FormBuilder) {
-
+  constructor(
+    private router: Router, 
+    public toastService: ToastService,
+     private fb: FormBuilder,
+     private questionsService: QuestionsService, 
+     private emailInputService: EmailInputService
+     ) {
+      this.dateResponse = new Date();
   }
 
   ngOnInit(): void {
@@ -35,63 +53,112 @@ export class ScreenThreeLevelThreeComponent implements OnInit {
     });
   }
 
+  processQuestionResponse(userResponse: string, isCorrect: boolean): void {
+    const question: Question = new Question(this.idUser,this.idApp,this.phaseActivity,this.numberActivity,userResponse,this.expectedResponse,isCorrect,this.dateResponse,this.typeOfQuestion);
+    this.questionsService.saveResponseQuestion(question).subscribe(
+      response => {
+        console.log("Question saved successfully:", response);
+      },
+      error => {
+        console.error("Error saving question:", error);
+      }
+    );
+  }
+
   changeAnswers(value: string): void {
-    if(value === "9" && this.imageRef === 1) {
+    if(value === this.expectedResponse && this.imageRef === 1) {
         this.buttonClass(true);
         setTimeout(() => {
           this.question = "Que número decimal está sendo representado por esses códigos?";
+  this.processQuestionResponse(value, true);
           this.createForm();
           this.imageRef = 2;
+          
+          this.numberActivity = "2";
+          this.expectedResponse = "10"
+      
         },1000);
-    } else if(value === "10" && this.imageRef === 2) {
+    } else if(value === this.expectedResponse && this.imageRef === 2) {
         this.buttonClass(true);
         setTimeout(() => {
           this.createForm();
           this.imageRef = 3;
+          this.processQuestionResponse(value, true);
+          this.numberActivity = "3";
+          this.expectedResponse = "5"
+          
         },1000);
-    } else if(value === "5" && this.imageRef === 3) {
+    } else if(value === this.expectedResponse && this.imageRef === 3) {
         this.buttonClass(true);
         setTimeout(() => {
           this.createForm();
           this.imageRef = 4;
+          this.processQuestionResponse(value, true);
+          this.numberActivity = "4";
+          this.expectedResponse = "11"
+          
         },1000);
-    } else if(value === "11" && this.imageRef === 4) {
+    } else if(value === this.expectedResponse && this.imageRef === 4) {
         this.buttonClass(true);
         setTimeout(() => {
           this.createForm();
           this.imageRef = 5;
+          this.processQuestionResponse(value, true);
+          this.numberActivity = "5";
+          this.expectedResponse = "0"
+          
         },1000);
-    } else if(value === "0" && this.imageRef === 5) {
+    } else if(value === this.expectedResponse && this.imageRef === 5) {
         this.buttonClass(true);
         setTimeout(() => {
           this.createForm();
           this.imageRef = 6;
+          this.processQuestionResponse(value, true);
+          this.numberActivity = "6";
+          this.expectedResponse = "17"
+          
         },1000);
-    } else if(value === "17" && this.imageRef === 6) {
+    } else if(value === this.expectedResponse && this.imageRef === 6) {
         this.buttonClass(true);
         setTimeout(() => {
           this.createForm();
           this.imageRef = 7;
+          this.processQuestionResponse(value, true);
+          this.numberActivity = "7";
+          this.expectedResponse = "2"
+          
         },1000);
-    } else if(value === "2" && this.imageRef === 7) {
+    } else if(value === this.expectedResponse && this.imageRef === 7) {
         this.buttonClass(true);
         setTimeout(() => {
           this.createForm();
           this.imageRef = 8;
+          this.processQuestionResponse(value, true);
+          this.numberActivity = "8";
+          this.expectedResponse = "0"
+          
         },1000);
-    } else if(value === "0" && this.imageRef === 8) {
+    } else if(value === this.expectedResponse && this.imageRef === 8) {
         this.buttonClass(true);
         setTimeout(() => {
           this.createForm();
           this.imageRef = 9;
+          this.processQuestionResponse(value, true);
+          this.numberActivity = "9";
+          this.expectedResponse = "20"
+          
         },1000);
-    } else if(value === "20" && this.imageRef === 9) {
+    } else if(value === this.expectedResponse && this.imageRef === 9) {
         this.buttonClass(true);
         setTimeout(() => {
           this.createForm();
           this.imageRef = 10;
+          this.processQuestionResponse(value, true);
+          this.numberActivity = "10";
+          this.expectedResponse = "31"
+          
         },1000);
-    } else if(value === "31" && this.imageRef === 10) {
+    } else if(value === this.expectedResponse && this.imageRef === 10) {
         this.buttonClass(true);
         setTimeout(() => {
           this.router.navigate(['fase-3-4']);
@@ -101,6 +168,7 @@ export class ScreenThreeLevelThreeComponent implements OnInit {
       this.toastService.show('Tente outra vez.');
       this.attempts += 1;
       console.log(this.attempts);
+      this.processQuestionResponse(value, false);
     }
   }
 
