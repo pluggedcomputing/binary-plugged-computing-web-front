@@ -18,6 +18,7 @@ export class EmailInputComponent {
     private router: Router
   ) { }
 
+  
   submitEmail() {
     if (!this.userEmail) {
       this.submitted = true;
@@ -38,8 +39,8 @@ export class EmailInputComponent {
     this.emailInputService.email = this.userEmail;
   }
 
+
   submitUserAnonymous(){
-    
     const user: User = { email: "Anonymous"};
     
     this.emailInputService.saveUser(user).subscribe(
