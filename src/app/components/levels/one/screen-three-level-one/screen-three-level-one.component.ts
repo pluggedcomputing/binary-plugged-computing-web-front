@@ -49,9 +49,9 @@ export class ScreenThreeLevelOneComponent implements OnInit {
   btnClass4: string = "";
 
   attempts: number = 0;
-  ///
+  /// Variáveis para o DB
   idUser: string = this.emailInputService.email
-  idApp: string = "WEB-BINARIOS"
+  idApp: string = "WEB-BINARIOS 1.0"
   phaseActivity: string = "1"
   numberActivity: string = "1";
   typeOfQuestion: string = "MULTIPLA ESCOLHA"

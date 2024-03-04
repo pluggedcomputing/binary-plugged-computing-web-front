@@ -3,6 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Question } from 'src/app/models/question.model';
+import { QuestionsService } from 'src/app/service/question/questions.service';
+import { EmailInputService } from 'src/app/service/email/email-input.service';
+
 
 @Component({
   selector: 'app-screen-three-level-two',
@@ -50,6 +54,15 @@ export class ScreenThreeLevelTwoComponent implements OnInit {
   inputType: boolean = false;
 
   attempts: number = 0;
+  /// Variáveis para o DB
+idUser: string = this.emailInputService.email
+idApp: string = "WEB-BINARIOS 1.0"
+phaseActivity: string = "2"
+numberActivity: string = "1";
+typeOfQuestion: string = "MULTIPLA ESCOLHA"
+expectedResponse: string = "19"
+dateResponse: Date;
+  ///
 
   question: string = "A sequência em binário 10011 corresponde a que número decimal?";
 
@@ -57,8 +70,14 @@ export class ScreenThreeLevelTwoComponent implements OnInit {
 
   answer: any;
 
-  constructor(private router: Router, public toastService: ToastService, private fb: FormBuilder) {
-
+  constructor(
+    private router: Router, 
+    public toastService: ToastService, 
+    private fb: FormBuilder,
+    private questionsService: QuestionsService, 
+    private emailInputService: EmailInputService
+    ) {
+      this.dateResponse = new Date();
   }
 
   ngOnInit(): void {
@@ -87,36 +106,90 @@ export class ScreenThreeLevelTwoComponent implements OnInit {
     this.toggleBynaries();
   }
 
-  changeAnswers(value: string, btn: number): void {
-    if(value === "19") {
-      this.buttonClass(btn, true);
-      setTimeout(() => {
-        this.answers = ["01101 e 00011", "10011 e 01101", "00011 e 01100", "01001 e 10001"];
-        this.question = "Os números 3 e 12 correspondem respectivamente à:";
-        this.answers.sort(() => Math.random() - 0.5);
-      },1000);
-    } else if(value === "00011 e 01100") {
-        this.buttonClass(btn, true);
-        setTimeout(() => {
-          this.question = "Qual é o MAIOR número decimal que você pode formar utilizando esses cinco cartões?";
-          this.inputType = true;
-        },1000);
-    } else if(value === "31") {
-        this.buttonClass(btn, true);
-        setTimeout(() => {
-          this.question = "Ainda utilizando os cartões, qual é o MENOR número decimal que você pode formar?";
-          this.createForm();
-          this.inputType = true;
-        },1000);
-    } else if(value === "0") {
-      this.buttonClass(btn, true);
-      setTimeout(() => {
-        this.router.navigate(['fase-2-4']);
-      },1000);
-    } else {
-      this.buttonClass(btn, false);
+
+/////
+processAnswer(answer: string, btn: number): void {
+    if (answer == this.expectedResponse){
+      if (this.numberActivity == "1"){
+        this.handleFirstAnswer(btn);
+      } else if (this.numberActivity == "2"){
+        this.handleSecondAnswer(btn);
+      } else if (this.numberActivity == "3"){
+        this.handleThirdAnswer(btn);
+      } else if (this.numberActivity == "4"){
+        this.handleFourthAnswer(btn);
+      }
+      
+
+      this.processQuestionResponse(answer, true);
+     
+
+    } else{
+      this.handleIncorrectAnswer(answer, btn);
+     
     }
-  }
+}
+
+processQuestionResponse(userResponse: string, isCorrect: boolean): void {
+  const question: Question = new Question(this.idUser,this.idApp,this.phaseActivity,this.numberActivity,userResponse,this.expectedResponse,isCorrect,this.dateResponse,this.typeOfQuestion);
+  this.questionsService.saveResponseQuestion(question).subscribe(
+    response => {
+      console.log("Question saved successfully:", response);
+    },
+    error => {
+      console.error("Error saving question:", error);
+    }
+  );
+}
+handleFirstAnswer(btn: number): void {
+  this.buttonClass(btn, true);
+  setTimeout(() => {
+      this.answers = ["01101 e 00011", "10011 e 01101", "00011 e 01100", "01001 e 10001"];
+      this.question = "Os números 3 e 12 correspondem respectivamente à:";
+      this.numberActivity = "2";
+      this.expectedResponse = "00011 e 01100"
+      this.answers.sort(() => Math.random() - 0.5);
+  }, 1000);
+}
+
+handleSecondAnswer(btn: number): void {
+  this.buttonClass(btn, true);
+  setTimeout(() => {
+      this.typeOfQuestion = "ABERTA"
+      this.question = "Qual é o MAIOR número decimal que você pode formar utilizando esses cinco cartões?";
+      this.numberActivity = "3";
+      this.expectedResponse = "31"
+      this.inputType = true;
+      this.answers.sort(() => Math.random() - 0.5);
+  }, 1000);
+}
+handleThirdAnswer(btn: number): void {
+  this.buttonClass(btn, true);
+  setTimeout(() => {  
+      this.question = "Ainda utilizando os cartões, qual é o MENOR número decimal que você pode formar?";
+      this.numberActivity = "4";
+      this.expectedResponse = "0"
+      this.createForm();
+      this.inputType = true;
+      this.answers.sort(() => Math.random() - 0.5);
+  }, 1000);
+}
+
+handleFourthAnswer(btn: number): void {
+  this.buttonClass(btn, true);
+  setTimeout(() => {
+      this.router.navigate(['fase-2-4']);
+  }, 1000);
+}
+
+handleIncorrectAnswer(answer: string, btn: number): void {
+  this.buttonClass(btn, false);
+  this.toastService.show('Tente outra vez.');
+  this.attempts += 1;
+  console.log(this.attempts);
+  this.processQuestionResponse(answer,false);
+}
+/////
 
   toggleBynaries():void {
     if(this.flip1 === 'active') {
@@ -150,13 +223,6 @@ export class ScreenThreeLevelTwoComponent implements OnInit {
     }
   }
 
-  pickAnswer(answer: string): void {
-    if(answer !== "19" && answer !== "00011 e 01100" && answer !== "31" && answer !== "0") {
-      this.toastService.show('Tente outra vez.');
-      this.attempts += 1;
-      console.log(this.attempts);
-    }
-  }
 
   buttonClass(button: number, status: boolean): void {
     if(button == 1) {
