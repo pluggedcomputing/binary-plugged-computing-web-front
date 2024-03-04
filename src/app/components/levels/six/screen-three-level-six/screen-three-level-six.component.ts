@@ -67,11 +67,11 @@ export class ScreenThreeLevelSixComponent implements OnInit {
 
   processAnswer(answer: string, btn: number): void {
     if (answer == this.expectedResponse){
-      if (this.numberActivity == "1"){
+      if (this.numberActivity == "1"  && this.imageRef === 1){
         this.handleFirstAnswer(btn);
-      } else if (this.numberActivity == "2"){
+      } else if (this.numberActivity == "2"  && this.imageRef === 2){
         this.handleSecondAnswer(btn);
-      } else if (this.numberActivity == "3"){
+      } else if (this.numberActivity == "3"  && this.imageRef === 3){
         this.handleThirdAnswer(btn);
       }
 
@@ -91,6 +91,7 @@ export class ScreenThreeLevelSixComponent implements OnInit {
       this.question = "Agora com as duas mãos converta o número 1010110011 para decimal.";
       this.numberActivity = "2";
       this.expectedResponse = "691"
+      this.imageRef = 2;
       this.answers.sort(() => Math.random() - 0.5);
   }, 1000);
 }
@@ -102,6 +103,7 @@ handleSecondAnswer(btn: number): void {
       this.question = "Se os dedos dos seus pés forem realmente flexíveis, seria possível obter números ainda maiores. Qual o maior número que se poderia contar utilizando seus 20 dedos?";
       this.numberActivity = "3";
       this.expectedResponse = "1.048.575"
+      this.imageRef = 3;
       this.answers.sort(() => Math.random() - 0.5);
   }, 1000);
 }
