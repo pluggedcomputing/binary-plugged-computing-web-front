@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastService } from '../../toast.service';
+import { Question } from 'src/app/models/question.model';
+import { QuestionsService } from 'src/app/service/question/questions.service';
+import { EmailInputService } from 'src/app/service/email/email-input.service';
 
 @Component({
   selector: 'app-screen-three-level-six',
@@ -18,13 +21,27 @@ export class ScreenThreeLevelSixComponent implements OnInit {
   imageRef: number | undefined;
 
   attempts: number = 0;
+   
+   idUser: string = this.emailInputService.email
+   idApp: string = "WEB-BINARIOS 1.0"
+   phaseActivity: string = "6"
+   numberActivity: string = "1";
+   typeOfQuestion: string = "MULTIPLA ESCOLHA"
+   expectedResponse: string = "11110"
+   dateResponse: Date;
+   
 
   question: string = "Utilizando apenas uma mão, qual a representação do número de 30 em binário?";
 
   answers: string[] = ["11110", "11101", "01001", "01111"];
 
-  constructor(private router: Router, public toastService: ToastService) {
-
+  constructor(
+    private router: Router,
+    public toastService: ToastService,
+    private questionsService: QuestionsService, 
+    private emailInputService: EmailInputService
+     ) {
+      this.dateResponse = new Date();
   }
 
   ngOnInit(): void {
@@ -32,40 +49,80 @@ export class ScreenThreeLevelSixComponent implements OnInit {
     this.imageRef = 1;
   }
 
-  changeAnswers(value: string, btn: number): void {
-    if(value === "11110" && this.imageRef === 1) {
-      this.buttonClass(btn, true);
-      setTimeout(() => {
-        this.answers = ["080", "111", "394", "691"];
-        this.question = "Agora com as duas mãos converta o número 1010110011 para decimal.";
-        this.answers.sort(() => Math.random() - 0.5);
-        this.imageRef = 2;
-      },1000);
-    } else if(value === "691" && this.imageRef === 2) {
-        this.buttonClass(btn, true);
-        setTimeout(() => {
-          this.answers = ["32.768", "1.048.575", "33.554.432", "1.073.741"];
-          this.question = "Se os dedos dos seus pés forem realmente flexíveis, seria possível obter números ainda maiores. Qual o maior número que se poderia contar utilizando seus 20 dedos?";
-          this.answers.sort(() => Math.random() - 0.5);
-          this.imageRef = 3;
-        },1000);
-    } else if(value === "1.048.575" && this.imageRef === 3) {
-        this.buttonClass(btn, true);
-        setTimeout(() => {
-          this.router.navigate(['fase-6-4']);
-        },1000);
-    } else {
-      this.buttonClass(btn, false);
-    }
+
+
+  processQuestionResponse(userResponse: string, isCorrect: boolean): void {
+    const question: Question = new Question(this.idUser,this.idApp,this.phaseActivity,this.numberActivity,userResponse,this.expectedResponse,isCorrect,this.dateResponse,this.typeOfQuestion);
+    this.questionsService.saveResponseQuestion(question).subscribe(
+      response => {
+        console.log("Question saved successfully:", response);
+      },
+      error => {
+        console.error("Error saving question:", error);
+      }
+    );
   }
 
-  pickAnswer(answer: string): void {
-    if(answer !== "11110" && answer !== "691" && answer !== "1.048.575") {
-      this.toastService.show('Tente outra vez.');
-      this.attempts += 1;
-      console.log(this.attempts);
+ 
+
+  processAnswer(answer: string, btn: number): void {
+    if (answer == this.expectedResponse){
+      if (this.numberActivity == "1"){
+        this.handleFirstAnswer(btn);
+      } else if (this.numberActivity == "2"){
+        this.handleSecondAnswer(btn);
+      } else if (this.numberActivity == "3"){
+        this.handleThirdAnswer(btn);
+      }
+
+      this.processQuestionResponse(answer, true);
+     
+
+    } else{
+      this.handleIncorrectAnswer(answer, btn);
+     
     }
-  }
+ }
+
+ handleFirstAnswer(btn: number): void {
+  this.buttonClass(btn, true);
+  setTimeout(() => {
+      this.answers = ["080", "111", "394", "691"];
+      this.question = "Agora com as duas mãos converta o número 1010110011 para decimal.";
+      this.numberActivity = "2";
+      this.expectedResponse = "691"
+      this.answers.sort(() => Math.random() - 0.5);
+  }, 1000);
+}
+
+handleSecondAnswer(btn: number): void {
+  this.buttonClass(btn, true);
+  setTimeout(() => {
+      this.answers = ["32.768", "1.048.575", "33.554.432", "1.073.741"];
+      this.question = "Se os dedos dos seus pés forem realmente flexíveis, seria possível obter números ainda maiores. Qual o maior número que se poderia contar utilizando seus 20 dedos?";
+      this.numberActivity = "3";
+      this.expectedResponse = "1.048.575"
+      this.answers.sort(() => Math.random() - 0.5);
+  }, 1000);
+}
+handleThirdAnswer(btn: number): void {
+  this.buttonClass(btn, true);
+  setTimeout(() => {
+      this.router.navigate(['fase-6-4']);
+  }, 1000);
+}
+
+handleIncorrectAnswer(answer: string, btn: number): void {
+  this.buttonClass(btn, false);
+  this.toastService.show('Tente outra vez.');
+  this.attempts += 1;
+  console.log(this.attempts);
+  this.processQuestionResponse(answer,false);
+}
+
+
+
+
 
   buttonClass(button: number, status: boolean): void {
     if(button == 1) {
