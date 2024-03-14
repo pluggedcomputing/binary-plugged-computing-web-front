@@ -5,20 +5,17 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Computação Plugada WEB</title>
-  <link rel="stylesheet" href="email-input.component.css">
 </head>
 <body>
   <div class="container">
     <div class="content">
-      <h2>Digite seu e-mail:</h2>
+      <h2>Digite seu e-mail ou código de usuário:</h2>
       <form (ngSubmit)="submitEmail()">
         <input type="email" id="email" name="userEmail" [(ngModel)]="userEmail" required>
         <button type="submit">Enviar</button>
       </form>
       <br>
-      <form (ngSubmit)="submitUserAnonymous()">
-        <button type="submit">Não desejo enviar</button>
-      </form>
+      <a (click)="submitUserAnonymous()">Entrar sem meus dados</a>
       <br>
       <span *ngIf="!userEmail && submitted" class="error-message">Por favor, digite seu e-mail.</span>
     </div>

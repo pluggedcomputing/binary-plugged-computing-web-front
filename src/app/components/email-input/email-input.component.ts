@@ -25,18 +25,20 @@ export class EmailInputComponent {
       return;
     }
     const user: User = { email: this.userEmail };
+    this.emailInputService.email = this.userEmail;
     
     this.emailInputService.saveUser(user).subscribe(
       response => {
         console.log("User saved successfully:", response);
-        this.router.navigate(['/fases']);
       },
       error => {
         console.error("Error saving user:", error);
+        alert("Houve um erro ao se conectar, você esta usando o sistema offline");
         
       }
     );
-    this.emailInputService.email = this.userEmail;
+    this.router.navigate(['/fases']);
+    
   }
 
 
@@ -49,6 +51,7 @@ export class EmailInputComponent {
       },
       error => {
         console.error("Error saving user:", error);
+        alert("Houve um erro ao se conectar, você esta usando o sistema offline");
         
       }
     );
