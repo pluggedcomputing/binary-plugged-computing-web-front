@@ -90,6 +90,7 @@ export class ScreenThreeLevelFiveComponent implements OnInit {
         },1000);
       } else if (value.toLowerCase() !== `muito prazer ${this.originalName}` && this.imageRef === 2){
         this.processQuestionResponse(value, false);   
+        this.buttonClass(false);
       } else {
       this.buttonClass(false);
       this.toastService.show(this.imageRef === 1 ? 'Este campo não pode ficar em branco.' : 'Tente outra vez.');
