@@ -7,7 +7,7 @@ import { Question } from 'src/app/models/question.model';
 })
 export class QuestionsService {
 
-  private readonly API = 'api/question';
+  private readonly API = 'http://api.observatorioturismopb.com.br:8383/api/question';
 
   constructor(private httpClient: HttpClient) { }
 

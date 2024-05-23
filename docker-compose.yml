@@ -1,0 +1,9 @@
+version: '3.5'
+
+services:
+  binary-app:
+    container_name: container-binary-app
+    image: a4sufpb/binary-app:latest   
+    ports:
+      - "4202:80"
+    restart: always 

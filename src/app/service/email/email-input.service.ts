@@ -8,7 +8,7 @@ import { User } from 'src/app/models/user.model';
 export class EmailInputService {
 
   email: string = "";
-  private readonly API = 'api/user';
+  private readonly API = 'http://api.observatorioturismopb.com.br:8383/api/user';
 
   constructor(private httpClient: HttpClient) { }
   
