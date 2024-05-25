@@ -8,14 +8,14 @@ import { User } from 'src/app/models/user.model';
 export class EmailInputService {
 
   email: string = "";
-  private readonly API = 'https://activities.a4s.dev.br/api/user';
+  private readonly API = 'https://activities.a4s.dev.br/api';
 
   constructor(private httpClient: HttpClient) { }
   
  
 
   saveUser(user: User) {
-    return this.httpClient.post<User>(this.API, user);
+    return this.httpClient.post<User>(`${this.API}/user`, user);
   }
 
   
