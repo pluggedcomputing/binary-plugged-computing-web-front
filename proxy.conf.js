@@ -1,10 +1,14 @@
 const PROXY_CONFIG = [
-    {
-      context: ['/api'],
-      target: 'https://activities.a4s.dev.br/api',
-      secure: false,
-      logLevel: 'debug'
+  {
+    context: ['/api'],
+    target: 'https://activities.a4s.dev.br',
+    secure: false,
+    logLevel: 'debug',
+    changeOrigin: true,
+    pathRewrite: {
+      '^/api': ''
     }
-  ];
-  
-  module.exports = PROXY_CONFIG;
+  }
+];
+
+module.exports = PROXY_CONFIG;
