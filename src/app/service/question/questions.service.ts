@@ -7,12 +7,12 @@ import { Question } from 'src/app/models/question.model';
 })
 export class QuestionsService {
 
-  private readonly API = 'http://api.observatorioturismopb.com.br:8383/api/question';
+  private readonly API = 'https://activities.a4s.dev.br/api';
 
   constructor(private httpClient: HttpClient) { }
 
   saveResponseQuestion(question: Question){
-      return this.httpClient.post<Question>(this.API,question);
+      return this.httpClient.post<Question>(`${this.API}/question`,question);
   }
 
 
