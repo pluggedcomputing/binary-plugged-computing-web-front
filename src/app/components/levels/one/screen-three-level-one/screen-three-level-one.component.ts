@@ -50,7 +50,7 @@ export class ScreenThreeLevelOneComponent implements OnInit {
 
   attempts: number = 0;
   /// Variáveis para o DB
-  idUser: string = this.sessionStorageService.getItem('userID') || 'Default Data';
+  idUser: string = ""
   idApp: string = "WEB-BINARIOS 1.0"
   phaseActivity: string = "1"
   numberActivity: string = "1";
@@ -75,6 +75,7 @@ export class ScreenThreeLevelOneComponent implements OnInit {
 
   ngOnInit(): void {
     this.answers.sort(() => Math.random() - 0.5);
+    this.idUser = this.sessionStorageService.getItem('userID') || 'Default Data';
   }
 
   toggleFlip(card: number): void {
