@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { ToastService } from '../../toast.service';
 import { Question } from 'src/app/models/question.model';
 import { QuestionsService } from 'src/app/service/question/questions.service';
-import { EmailInputService } from 'src/app/service/email/email-input.service';
+import { SessionStorageService } from 'src/app/service/session-storage/session-storage-service.service';
 
 @Component({
   selector: 'app-screen-three-level-six',
@@ -22,7 +22,7 @@ export class ScreenThreeLevelSixComponent implements OnInit {
 
   attempts: number = 0;
    
-   idUser: string = this.emailInputService.email
+   idUser: string = this.sessionStorageService.getItem('userID') || 'Default Data';
    idApp: string = "WEB-BINARIOS 1.0"
    phaseActivity: string = "6"
    numberActivity: string = "1";
@@ -39,7 +39,7 @@ export class ScreenThreeLevelSixComponent implements OnInit {
     private router: Router,
     public toastService: ToastService,
     private questionsService: QuestionsService, 
-    private emailInputService: EmailInputService
+    private sessionStorageService: SessionStorageService
      ) {
       this.dateResponse = new Date();
   }

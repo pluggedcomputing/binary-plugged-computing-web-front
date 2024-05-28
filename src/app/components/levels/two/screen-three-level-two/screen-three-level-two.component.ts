@@ -5,7 +5,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { FormBuilder, Validators } from '@angular/forms';
 import { Question } from 'src/app/models/question.model';
 import { QuestionsService } from 'src/app/service/question/questions.service';
-import { EmailInputService } from 'src/app/service/email/email-input.service';
+import { SessionStorageService } from 'src/app/service/session-storage/session-storage-service.service';
 
 
 @Component({
@@ -55,7 +55,7 @@ export class ScreenThreeLevelTwoComponent implements OnInit {
 
   attempts: number = 0;
   /// Variáveis para o DB
-idUser: string = this.emailInputService.email
+idUser: string = this.sessionStorageService.getItem('userID') || 'Default Data';
 idApp: string = "WEB-BINARIOS 1.0"
 phaseActivity: string = "2"
 numberActivity: string = "1";
@@ -75,7 +75,7 @@ dateResponse: Date;
     public toastService: ToastService, 
     private fb: FormBuilder,
     private questionsService: QuestionsService, 
-    private emailInputService: EmailInputService
+    private sessionStorageService: SessionStorageService
     ) {
       this.dateResponse = new Date();
   }
