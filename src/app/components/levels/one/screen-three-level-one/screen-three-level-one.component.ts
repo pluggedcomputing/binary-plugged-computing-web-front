@@ -76,6 +76,7 @@ export class ScreenThreeLevelOneComponent implements OnInit {
   ngOnInit(): void {
     this.answers.sort(() => Math.random() - 0.5);
     this.idUser = this.sessionStorageService.getItem('userID') || 'Default Data';
+
   }
 
   toggleFlip(card: number): void {
