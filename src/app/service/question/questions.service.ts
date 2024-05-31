@@ -7,7 +7,7 @@ import { Question } from 'src/app/models/question.model';
 })
 export class QuestionsService {
 
-  private readonly API = 'https://activities.a4s.dev.br/api/question';
+  private readonly API = 'https://activities.a4s.dev.br/api/response';
 
   constructor(private httpClient: HttpClient) { }
 
