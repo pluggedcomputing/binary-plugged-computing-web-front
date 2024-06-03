@@ -1,19 +1,19 @@
 export class Question {
-  private idUser: string;
+  private userID: string;
   private idApp: string;
-  private phaseActivity: string;
-  private numberActivity: string;
+  private phase: string;
+  private activity: string;
   private userResponse: string;
   private expectedResponse: string;
   private isCorrect: boolean;
   private dateResponse: Date;
   private typeOfQuestion: string;
 
-  constructor(idUser: string, idApp: string, phaseActivity: string, numberActivity: string, userResponse: string, expectedResponse: string, isCorrect: boolean, dateResponse: Date, typeOfQuestion: string) {
-    this.idUser = idUser;
+  constructor(userID: string, idApp: string, phase: string, activity: string, userResponse: string, expectedResponse: string, isCorrect: boolean, dateResponse: Date, typeOfQuestion: string) {
+    this.userID = userID;
     this.idApp = idApp;
-    this.phaseActivity = phaseActivity;
-    this.numberActivity = numberActivity;
+    this.phase = phase;
+    this.activity = activity;
     this.userResponse = userResponse;
     this.expectedResponse = expectedResponse;
     this.isCorrect = isCorrect;
@@ -22,20 +22,20 @@ export class Question {
 }
 
 
-  setIdUser(idUser: string): void {
-      this.idUser = idUser;
+  setuserID(userID: string): void {
+      this.userID = userID;
   }
 
   setIdApp(idApp: string): void {
       this.idApp = idApp;
   }
 
-  setPhaseActivity(phaseActivity: string): void {
-      this.phaseActivity = phaseActivity;
+  setphase(phase: string): void {
+      this.phase = phase;
   }
 
-  setNumberActivity(numberActivity: string): void {
-      this.numberActivity = numberActivity;
+  setactivity(activity: string): void {
+      this.activity = activity;
   }
 
   setUserResponse(userResponse: string): void {

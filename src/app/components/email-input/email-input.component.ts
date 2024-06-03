@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { EmailInputService } from 'src/app/service/email/email-input.service';
+import { UserInputService } from 'src/app/service/user/user.service';
 import { User } from 'src/app/models/user.model';
 import { Router } from '@angular/router';
 import { SessionStorageService } from 'src/app/service/session-storage/session-storage-service.service';
@@ -18,21 +18,21 @@ export class EmailInputComponent {
   submitted: boolean = false;
 
   constructor(
-    private emailInputService: EmailInputService,
+    private userInputService: UserInputService,
     private router: Router,
     private sessionStorageService: SessionStorageService
   ) { }
 
 
 
-  submitEmail() {
+  submitUserID() {
     if (!this.userID) {
       this.submitted = true;
       return;
     }
-    const user: User = { email: this.userID };
-    this.emailInputService.email = this.userID;
-    this.emailInputService.saveUser(user).subscribe(
+    const user: User = { userID: this.userID };
+    this.userInputService.userID = this.userID;
+    this.userInputService.saveUser(user).subscribe(
       response => {
         this.sessionStorageService.setItem('userID', this.userID);
         console.log("User saved successfully:", response);
@@ -49,9 +49,9 @@ export class EmailInputComponent {
 
 
   submitUserAnonymous(){
-    const user: User = { email: "Anonymous"};
+    const user: User = { userID: "Anonymous"};
     
-    this.emailInputService.saveUser(user).subscribe(
+    this.userInputService.saveUser(user).subscribe(
       response => {
         console.log("User saved successfully:", response);
       },
@@ -61,7 +61,7 @@ export class EmailInputComponent {
         
       }
     );
-    this.emailInputService.email = "Anonymous";
+    this.userInputService.userID = "Anonymous";
     this.router.navigate(['/fases']);
       
   }

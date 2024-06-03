@@ -5,10 +5,11 @@ import { User } from 'src/app/models/user.model';
 @Injectable({
   providedIn: 'root'
 })
-export class EmailInputService {
+export class UserInputService {
 
-  email: string = "";
   private readonly API = 'https://activities.a4s.dev.br/api/user';
+  
+  userID: string = '';
 
   constructor(private httpClient: HttpClient) { }
   
@@ -19,3 +20,4 @@ export class EmailInputService {
 
   
 }
+  

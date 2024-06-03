@@ -10,14 +10,14 @@
   <div class="container">
     <div class="content">
       <h2>Digite seu e-mail ou código de usuário:</h2>
-      <form (ngSubmit)="submitEmail()">
-        <input type="email" id="email" name="userEmail" [(ngModel)]="userID" required>
+      <form (ngSubmit)="submitUserID()">
+        <input type="userID" id="userID" name="userID" [(ngModel)]="userID" required>
         <button type="submit">Enviar</button>
       </form>
       <br>
       <a (click)="submitUserAnonymous()">Entrar sem meus dados</a>
       <br>
-      <span *ngIf="!userID && submitted" class="error-message">Por favor, digite seu e-mail.</span>
+      <span *ngIf="!userID && submitted" class="error-message">Por favor, digite seu e-mail ou código.</span>
     </div>
   </div>
 </body>
