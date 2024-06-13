@@ -53,6 +53,7 @@ export class EmailInputComponent {
     
     this.userInputService.saveUser(user).subscribe(
       response => {
+        this.sessionStorageService.setItem('userID', this.userID);
         console.log("User saved successfully:", response);
       },
       error => {
