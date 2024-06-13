@@ -83,7 +83,7 @@ export class ScreenThreeLevelFourComponent implements OnInit {
           this.createForm();
           this.imageRef = 3;
           this.processQuestionResponse(value,true);
-          this.expectedResponse = "10";
+          this.expectedResponse = "21";
           this.numberActivity = "3";
         },1000);
     } else if(value === this.expectedResponse && this.imageRef === 3) {
