@@ -8,10 +8,7 @@ import { SessionStorageService } from 'src/app/service/session-storage/session-s
   selector: 'app-email-input',
   templateUrl: './email-input.component.html',
   styleUrls: ['./email-input.component.css']
-
 })
-
-
 export class EmailInputComponent {
 
   userID: string = "";
@@ -23,8 +20,6 @@ export class EmailInputComponent {
     private sessionStorageService: SessionStorageService
   ) { }
 
-
-
   submitUserID() {
     if (!this.userID) {
       this.submitted = true;
@@ -35,37 +30,32 @@ export class EmailInputComponent {
     this.userInputService.saveUser(user).subscribe(
       response => {
         this.sessionStorageService.setItem('userID', this.userID);
-        console.log("User saved successfully:", response);
+        console.log("User saved successfully:", response);      
       },
       error => {
         console.error("Error saving user:", error);
-        alert("Houve um erro ao se conectar, você esta usando o sistema offline!");
-        
+        alert("Houve um erro ao se conectar, você está usando o sistema offline!");
       }
     );
-    this.router.navigate(['/fases']);
-    
+    console.log(this.userID);
+    this.router.navigate(['/fases']); 
   }
 
-
-  submitUserAnonymous(){
-    const user: User = { userID: "Anonymous"};
-    
+  submitUserAnonymous() {
+    const user: User = { userID: "Anonymous" };
+    this.userInputService.userID = "Anonymous";
     this.userInputService.saveUser(user).subscribe(
       response => {
-        this.sessionStorageService.setItem('userID', this.userID);
+        this.sessionStorageService.setItem('userID', "Anonymous");
         console.log("User saved successfully:", response);
+        
       },
       error => {
         console.error("Error saving user:", error);
-        alert("Houve um erro ao se conectar, você esta usando o sistema offline");
-        
+        alert("Houve um erro ao se conectar, você está usando o sistema offline!");
       }
     );
-    this.userInputService.userID = "Anonymous";
-    this.router.navigate(['/fases']);
-      
+    console.log("Anonymous");
+    this.router.navigate(['/fases']); 
   }
-
-  
 }
