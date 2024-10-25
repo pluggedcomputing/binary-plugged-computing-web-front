@@ -49,8 +49,6 @@ export class ScreenThreeLevelSixComponent implements OnInit {
     this.imageRef = 1;
   }
 
-
-
   processQuestionResponse(userResponse: string, isCorrect: boolean): void {
     const question: Question = new Question(this.idUser,this.idApp,this.phaseActivity,this.numberActivity,userResponse,this.expectedResponse,isCorrect,this.dateResponse,this.typeOfQuestion);
     this.questionsService.saveResponseQuestion(question).subscribe(
@@ -63,89 +61,89 @@ export class ScreenThreeLevelSixComponent implements OnInit {
     );
   }
 
- 
-
   processAnswer(answer: string, btn: number): void {
     if (answer == this.expectedResponse){
-      if (this.numberActivity == "1"  && this.imageRef === 1){
+      if (this.numberActivity == "1" && this.imageRef === 1) {
         this.handleFirstAnswer(btn);
-      } else if (this.numberActivity == "2"  && this.imageRef === 2){
+      } else if (this.numberActivity == "2" && this.imageRef === 2) {
         this.handleSecondAnswer(btn);
-      } else if (this.numberActivity == "3"  && this.imageRef === 3){
+      } else if (this.numberActivity == "3" && this.imageRef === 3) {
         this.handleThirdAnswer(btn);
       }
 
       this.processQuestionResponse(answer, true);
-     
+      this.toastService.show('Parabéns!'); 
+      setTimeout(() => {
+        this.toastService.clear(); 
+      }, 1000);
 
-    } else{
+    } else {
       this.handleIncorrectAnswer(answer, btn);
-     
     }
- }
+  }
 
- handleFirstAnswer(btn: number): void {
-  this.buttonClass(btn, true);
-  setTimeout(() => {
+  handleFirstAnswer(btn: number): void {
+    this.buttonClass(btn, true);
+    setTimeout(() => {
+      this.toastService.clear();
       this.answers = ["080", "111", "394", "691"];
       this.question = "Agora com as duas mãos converta o número 1010110011 para decimal.";
       this.numberActivity = "2";
-      this.expectedResponse = "691"
+      this.expectedResponse = "691";
       this.imageRef = 2;
       this.answers.sort(() => Math.random() - 0.5);
-  }, 1000);
-}
+    }, 1000);
+  }
 
-handleSecondAnswer(btn: number): void {
-  this.buttonClass(btn, true);
-  setTimeout(() => {
+  handleSecondAnswer(btn: number): void {
+    this.buttonClass(btn, true);
+    setTimeout(() => {
+      this.toastService.clear();
       this.answers = ["32.768", "1.048.575", "33.554.432", "1.073.741"];
       this.question = "Se os dedos dos seus pés forem realmente flexíveis, seria possível obter números ainda maiores. Qual o maior número que se poderia contar utilizando seus 20 dedos?";
       this.numberActivity = "3";
-      this.expectedResponse = "1.048.575"
+      this.expectedResponse = "1.048.575";
       this.imageRef = 3;
       this.answers.sort(() => Math.random() - 0.5);
-  }, 1000);
-}
-handleThirdAnswer(btn: number): void {
-  this.buttonClass(btn, true);
-  setTimeout(() => {
+    }, 1000);
+  }
+
+  handleThirdAnswer(btn: number): void {
+    this.buttonClass(btn, true);
+    setTimeout(() => {
+      this.toastService.clear();
       this.router.navigate(['fase-6-4']);
-  }, 1000);
-}
+    }, 1000);
+  }
 
-handleIncorrectAnswer(answer: string, btn: number): void {
-  this.buttonClass(btn, false);
-  this.toastService.show('Tente outra vez.');
-  this.attempts += 1;
-  console.log(this.attempts);
-  this.processQuestionResponse(answer,false);
-}
-
-
-
-
+  handleIncorrectAnswer(answer: string, btn: number): void {
+    this.buttonClass(btn, false);
+    this.toastService.show('Tente outra vez.');
+    this.attempts += 1;
+    console.log(this.attempts);
+    this.processQuestionResponse(answer,false);
+  }
 
   buttonClass(button: number, status: boolean): void {
-    if(button == 1) {
+    if (button == 1) {
       this.btnClass1 = status ? "correct" : "incorrect";
-      setTimeout(() => {this.btnClass1 = "";},1000);
+      setTimeout(() => { this.btnClass1 = ""; }, 1000);
     }
-    if(button == 2) {
+    if (button == 2) {
       this.btnClass2 = status ? "correct" : "incorrect";
-      setTimeout(() => {this.btnClass2 = "";},1000);
+      setTimeout(() => { this.btnClass2 = ""; }, 1000);
     }
-    if(button == 3) {
+    if (button == 3) {
       this.btnClass3 = status ? "correct" : "incorrect";
-      setTimeout(() => {this.btnClass3 = "";},1000);
+      setTimeout(() => { this.btnClass3 = ""; }, 1000);
     }
-    if(button == 4) {
+    if (button == 4) {
       this.btnClass4 = status ? "correct" : "incorrect";
-      setTimeout(() => {this.btnClass4 = "";},1000);
+      setTimeout(() => { this.btnClass4 = ""; }, 1000);
     }
-    if(button == 5) {
+    if (button == 5) {
       this.btnClass5 = status ? "correct" : "incorrect";
-      setTimeout(() => {this.btnClass5 = "";},1000);
+      setTimeout(() => { this.btnClass5 = ""; }, 1000);
     }
   }
 

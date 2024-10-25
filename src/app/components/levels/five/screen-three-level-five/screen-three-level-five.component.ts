@@ -14,11 +14,8 @@ import { SessionStorageService } from 'src/app/service/session-storage/session-s
 export class ScreenThreeLevelFiveComponent implements OnInit {
 
   btnClass1: string = "";
-
   originalName: string = "";
-
   imageRef: number | undefined;
-
   attempts: number = 0;
 
   idUser: string = this.sessionStorageService.getItem('userID') || 'Default Data';
@@ -54,10 +51,8 @@ export class ScreenThreeLevelFiveComponent implements OnInit {
     });
   }
 
-
-  
   processQuestionResponse(userResponse: string, isCorrect: boolean): void {
-    const question: Question = new Question(this.idUser,this.idApp,this.phaseActivity,this.numberActivity,userResponse,this.expectedResponse,isCorrect,this.dateResponse,this.typeOfQuestion);
+    const question: Question = new Question(this.idUser, this.idApp, this.phaseActivity, this.numberActivity, userResponse, this.expectedResponse, isCorrect, this.dateResponse, this.typeOfQuestion);
     this.questionsService.saveResponseQuestion(question).subscribe(
       response => {
         console.log("Question saved successfully:", response);
@@ -71,44 +66,41 @@ export class ScreenThreeLevelFiveComponent implements OnInit {
   changeAnswers(value: string): void {
     let codifiedName: string = "";
     if(value !== "" && this.imageRef === 1) {
-        this.buttonClass(true);
-        codifiedName = this.textToBinary(value.toLowerCase());
-        this.originalName = value.toLowerCase();
-        this.expectedResponse = 'muito prazer ' + this.originalName;
-        setTimeout(() => {
-          this.question = `Opaaa! O Tom recebeu a sua mensagem e já te respondeu... <br> Traduza para saber o que ele te falou: <br> 01101 10101 01001 10100 01111 &nbsp;&nbsp; 10000 10010 00001 11010 00101 10010 &nbsp;&nbsp; ${codifiedName}`;
-          this.createForm();
-          this.imageRef = 2;
-          console.log(codifiedName);
-          console.log(value);
-        },1000);
-    } else if((value.toLowerCase() === `muito prazer ${this.originalName}`) && this.imageRef === 2) {
-        this.buttonClass(true);
-        setTimeout(() => {
-          this.processQuestionResponse(value, true);
-          this.router.navigate(['fase-5-4']);
-        },1000);
-      } else if (value.toLowerCase() !== `muito prazer ${this.originalName}` && this.imageRef === 2){
-        this.processQuestionResponse(value, false);   
-        this.buttonClass(false);
-      } else {
+      this.buttonClass(true);
+      codifiedName = this.textToBinary(value.toLowerCase());
+      this.originalName = value.toLowerCase();
+      this.expectedResponse = 'muito prazer ' + this.originalName;
+      setTimeout(() => {
+        this.question = `Opaaa! O Tom recebeu a sua mensagem e já te respondeu... <br> Traduza para saber o que ele te falou: <br> 01101 10101 01001 10100 01111 &nbsp;&nbsp; 10000 10010 00001 11010 00101 10010 &nbsp;&nbsp; ${codifiedName}`;
+        this.createForm();
+        this.imageRef = 2;
+      }, 1000);
+    } else if ((value.toLowerCase() === `muito prazer ${this.originalName}`) && this.imageRef === 2) {
+      this.buttonClass(true);
+      this.toastService.show('Parabéns!'); 
+      setTimeout(() => {
+        this.toastService.clear(); 
+        this.processQuestionResponse(value, true);
+        this.router.navigate(['fase-5-4']);
+      }, 1000); 
+    } else if (value.toLowerCase() !== `muito prazer ${this.originalName}` && this.imageRef === 2) {
+      this.processQuestionResponse(value, false);   
+      this.buttonClass(false);
+    } else {
       this.buttonClass(false);
       this.toastService.show(this.imageRef === 1 ? 'Este campo não pode ficar em branco.' : 'Tente outra vez.');
       this.attempts += 1;
-      console.log(this.attempts);
-      console.log(value);
-      console.log(this.originalName);
     }
   }
 
   buttonClass(status: boolean): void {
     this.btnClass1 = status ? "correct" : "incorrect";
-    setTimeout(() => {this.btnClass1 = "";},1000);
+    setTimeout(() => { this.btnClass1 = ""; }, 1000);
   }
 
   textToBinary(text: string) {
     return text.split('').map(function (char: string) {
-        return char.charCodeAt(0).toString(2).slice(-5);
+      return char.charCodeAt(0).toString(2).slice(-5);
     }).join(' ');
   }
 

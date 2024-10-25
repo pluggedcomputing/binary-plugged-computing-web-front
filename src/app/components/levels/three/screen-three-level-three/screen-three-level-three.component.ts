@@ -14,22 +14,18 @@ import { SessionStorageService } from 'src/app/service/session-storage/session-s
 export class ScreenThreeLevelThreeComponent implements OnInit {
 
   btnClass1: string = "";
-
   imageRef: number | undefined;
-
   attempts: number = 0;
-/// Variáveis para o DB
-idUser: string = this.sessionStorageService.getItem('userID') || 'Default Data';
-idApp: string = "WEB-BINARIOS 1.0"
-phaseActivity: string = "3"
-numberActivity: string = "1";
-typeOfQuestion: string = "ABERTA"
-expectedResponse: string = "9"
-dateResponse: Date;
-  ///
+
+  idUser: string = this.sessionStorageService.getItem('userID') || 'Default Data';
+  idApp: string = "WEB-BINARIOS 1.0";
+  phaseActivity: string = "3";
+  numberActivity: string = "1";
+  typeOfQuestion: string = "ABERTA";
+  expectedResponse: string = "9";
+  dateResponse: Date;
 
   question: string = "Ao invés de 1 e 0, poderíamos usar outros códigos para representar cartões virados ou não. Considerando isso, que valor decimal representariam esses códigos? Tente lembrar a quantidade de pontos em cada cartão para fazer essa conversão.";
-
   answer: any;
 
   constructor(
@@ -54,7 +50,7 @@ dateResponse: Date;
   }
 
   processQuestionResponse(userResponse: string, isCorrect: boolean): void {
-    const question: Question = new Question(this.idUser,this.idApp,this.phaseActivity,this.numberActivity,userResponse,this.expectedResponse,isCorrect,this.dateResponse,this.typeOfQuestion);
+    const question: Question = new Question(this.idUser, this.idApp, this.phaseActivity, this.numberActivity, userResponse, this.expectedResponse, isCorrect, this.dateResponse, this.typeOfQuestion);
     this.questionsService.saveResponseQuestion(question).subscribe(
       response => {
         console.log("Question saved successfully:", response);
@@ -66,115 +62,134 @@ dateResponse: Date;
   }
 
   changeAnswers(value: string): void {
-    if(value === this.expectedResponse && this.imageRef === 1) {
-        this.buttonClass(true);
-        setTimeout(() => {
-          this.question = "Que número decimal está sendo representado por esses códigos?";
-  this.processQuestionResponse(value, true);
-          this.createForm();
-          this.imageRef = 2;
-          
-          this.numberActivity = "2";
-          this.expectedResponse = "10"
-      
-        },1000);
-    } else if(value === this.expectedResponse && this.imageRef === 2) {
-        this.buttonClass(true);
-        setTimeout(() => {
-          this.createForm();
-          this.imageRef = 3;
-          this.processQuestionResponse(value, true);
-          this.numberActivity = "3";
-          this.expectedResponse = "5"
-          
-        },1000);
-    } else if(value === this.expectedResponse && this.imageRef === 3) {
-        this.buttonClass(true);
-        setTimeout(() => {
-          this.createForm();
-          this.imageRef = 4;
-          this.processQuestionResponse(value, true);
-          this.numberActivity = "4";
-          this.expectedResponse = "11"
-          
-        },1000);
-    } else if(value === this.expectedResponse && this.imageRef === 4) {
-        this.buttonClass(true);
-        setTimeout(() => {
-          this.createForm();
-          this.imageRef = 5;
-          this.processQuestionResponse(value, true);
-          this.numberActivity = "5";
-          this.expectedResponse = "0"
-          
-        },1000);
-    } else if(value === this.expectedResponse && this.imageRef === 5) {
-        this.buttonClass(true);
-        setTimeout(() => {
-          this.createForm();
-          this.imageRef = 6;
-          this.processQuestionResponse(value, true);
-          this.numberActivity = "6";
-          this.expectedResponse = "17"
-          
-        },1000);
-    } else if(value === this.expectedResponse && this.imageRef === 6) {
-        this.buttonClass(true);
-        setTimeout(() => {
-          this.createForm();
-          this.imageRef = 7;
-          this.processQuestionResponse(value, true);
-          this.numberActivity = "7";
-          this.expectedResponse = "2"
-          
-        },1000);
-    } else if(value === this.expectedResponse && this.imageRef === 7) {
-        this.buttonClass(true);
-        setTimeout(() => {
-          this.createForm();
-          this.imageRef = 8;
-          this.processQuestionResponse(value, true);
-          this.numberActivity = "8";
-          this.expectedResponse = "0"
-          
-        },1000);
-    } else if(value === this.expectedResponse && this.imageRef === 8) {
-        this.buttonClass(true);
-        setTimeout(() => {
-          this.createForm();
-          this.imageRef = 9;
-          this.processQuestionResponse(value, true);
-          this.numberActivity = "9";
-          this.expectedResponse = "20"
-          
-        },1000);
-    } else if(value === this.expectedResponse && this.imageRef === 9) {
-        this.buttonClass(true);
-        setTimeout(() => {
-          this.createForm();
-          this.imageRef = 10;
-          this.processQuestionResponse(value, true);
-          this.numberActivity = "10";
-          this.expectedResponse = "31"
-          
-        },1000);
-    } else if(value === this.expectedResponse && this.imageRef === 10) {
-        this.buttonClass(true);
-        setTimeout(() => {
-          this.router.navigate(['fase-3-4']);
-        },1000);
+    if (value === this.expectedResponse && this.imageRef === 1) {
+      this.buttonClass(true);
+      this.toastService.show('Parabéns!');
+      setTimeout(() => {
+        this.toastService.clear(); 
+        this.question = "Que número decimal está sendo representado por esses códigos?";
+        this.processQuestionResponse(value, true);
+        this.createForm();
+        this.imageRef = 2;
+        this.numberActivity = "2";
+        this.expectedResponse = "10";
+      }, 1000);
+
+    } else if (value === this.expectedResponse && this.imageRef === 2) {
+      this.buttonClass(true);
+      this.toastService.show('Parabéns!');
+      setTimeout(() => {
+        this.toastService.clear();
+        this.createForm();
+        this.imageRef = 3;
+        this.processQuestionResponse(value, true);
+        this.numberActivity = "3";
+        this.expectedResponse = "5";
+      }, 1000);
+
+    } else if (value === this.expectedResponse && this.imageRef === 3) {
+      this.buttonClass(true);
+      this.toastService.show('Parabéns!');
+      setTimeout(() => {
+        this.toastService.clear();
+        this.createForm();
+        this.imageRef = 4;
+        this.processQuestionResponse(value, true);
+        this.numberActivity = "4";
+        this.expectedResponse = "11";
+      }, 1000);
+
+    } else if (value === this.expectedResponse && this.imageRef === 4) {
+      this.buttonClass(true);
+      this.toastService.show('Parabéns!');
+      setTimeout(() => {
+        this.toastService.clear();
+        this.createForm();
+        this.imageRef = 5;
+        this.processQuestionResponse(value, true);
+        this.numberActivity = "5";
+        this.expectedResponse = "0";
+      }, 1000);
+
+    } else if (value === this.expectedResponse && this.imageRef === 5) {
+      this.buttonClass(true);
+      this.toastService.show('Parabéns!');
+      setTimeout(() => {
+        this.toastService.clear();
+        this.createForm();
+        this.imageRef = 6;
+        this.processQuestionResponse(value, true);
+        this.numberActivity = "6";
+        this.expectedResponse = "17";
+      }, 1000);
+
+    } else if (value === this.expectedResponse && this.imageRef === 6) {
+      this.buttonClass(true);
+      this.toastService.show('Parabéns!');
+      setTimeout(() => {
+        this.toastService.clear();
+        this.createForm();
+        this.imageRef = 7;
+        this.processQuestionResponse(value, true);
+        this.numberActivity = "7";
+        this.expectedResponse = "2";
+      }, 1000);
+
+    } else if (value === this.expectedResponse && this.imageRef === 7) {
+      this.buttonClass(true);
+      this.toastService.show('Parabéns!');
+      setTimeout(() => {
+        this.toastService.clear();
+        this.createForm();
+        this.imageRef = 8;
+        this.processQuestionResponse(value, true);
+        this.numberActivity = "8";
+        this.expectedResponse = "0";
+      }, 1000);
+
+    } else if (value === this.expectedResponse && this.imageRef === 8) {
+      this.buttonClass(true);
+      this.toastService.show('Parabéns!');
+      setTimeout(() => {
+        this.toastService.clear();
+        this.createForm();
+        this.imageRef = 9;
+        this.processQuestionResponse(value, true);
+        this.numberActivity = "9";
+        this.expectedResponse = "20";
+      }, 1000);
+
+    } else if (value === this.expectedResponse && this.imageRef === 9) {
+      this.buttonClass(true);
+      this.toastService.show('Parabéns!');
+      setTimeout(() => {
+        this.toastService.clear();
+        this.createForm();
+        this.imageRef = 10;
+        this.processQuestionResponse(value, true);
+        this.numberActivity = "10";
+        this.expectedResponse = "31";
+      }, 1000);
+
+    } else if (value === this.expectedResponse && this.imageRef === 10) {
+      this.buttonClass(true);
+      this.toastService.show('Parabéns!');
+      setTimeout(() => {
+        this.toastService.clear();
+        this.router.navigate(['fase-3-4']);
+      }, 1000);
+
     } else {
       this.buttonClass(false);
       this.toastService.show('Tente outra vez.');
       this.attempts += 1;
-      console.log(this.attempts);
       this.processQuestionResponse(value, false);
     }
   }
 
   buttonClass(status: boolean): void {
     this.btnClass1 = status ? "correct" : "incorrect";
-    setTimeout(() => {this.btnClass1 = "";},1000);
+    setTimeout(() => { this.btnClass1 = ""; }, 1000);
   }
 
 }
