@@ -6,7 +6,7 @@ body {
   width: 100%;
   height: 100%;
   text-align: center;
-  font-size: 2em;
+  font-size: 2.2em; 
   margin-bottom: 1rem;
 }
 
@@ -14,7 +14,7 @@ body {
   width: 100%;
   height: 10%;
   color: var(--dark-blue);
-  font-size: 3rem;
+  font-size: 3.5rem; 
 }
 
 .content {
@@ -35,14 +35,13 @@ body {
   align-items: center;
   width: 100%;
   height: 100%;
-
 }
 
 .level {
   background-color: var(--light-blue);
   border-radius: 10px;
-  width: 60%;
-  height: 20%;
+  width: 70%; 
+  height: 22%; 
   margin: 1rem;
   padding: 0;
   display: flex;
@@ -61,12 +60,12 @@ body {
 }
 
 .level a img {
-  width: 20%;
-  margin: 0.5rem
+  width: 25%; 
+  margin: 0.5rem;
 }
 
 .description {
-  width: 300px;
+  width: 320px; 
   margin: 0;
 }
 
@@ -75,11 +74,11 @@ p {
 }
 
 .description :first-child {
-  font-size: 2rem;
+  font-size: 2.2rem; 
 }
 
 .description :nth-child(2) {
-  font-size: 1.5rem;
+  font-size: 1.8rem; 
 }
 
 .bi {
@@ -88,7 +87,7 @@ p {
 
 @media(max-width: 992px) {
   .header {
-    font-size: 2rem;
+    font-size: 2.5rem; 
   }
   .level a {
     gap: 6%;

@@ -12,7 +12,7 @@ body {
 
 .container div img {
   width: 25%;
-  margin: 1rem;
+  margin: 1.5rem; 
 }
 
 .text-box {
@@ -23,21 +23,22 @@ body {
   align-items: center;
   width: 100vw;
   text-align: center;
-  padding: 10px;
+  padding: 15px; 
 }
 
 h3 {
-  margin-top: 4rem !important;
+  margin-top: 5rem !important; 
 }
 
-h2,h3 {
+h2, h3 {
   color: var(--dark-blue);
-  margin: 1rem;
+  margin: 1.5rem; 
+  font-size: 2rem; 
 }
 
 span {
   color: var(--dark-blue);
-  font-size: 1.4rem;
+  font-size: 1.6rem; 
   margin: 0;
   padding: 0;
 }
@@ -47,15 +48,15 @@ span {
   justify-content: space-between;
   position: absolute;
   bottom: 0;
-  padding: 10px;
+  padding: 15px; 
 }
 
 .nav-btn {
   margin: 2%;
   border-radius: 50%;
   background-color: var(--dark-blue);
-  width: 75px;
-  height: 75px;
+  width: 85px; 
+  height: 85px;
   text-align: center;
 }
 
@@ -67,15 +68,20 @@ a {
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 1.5rem; 
 }
 
 @media only screen and (max-width: 527px) {
   .container div img {
     width: 75%;
-    margin: 1rem;
+    margin: 1.5rem;
   }
 
   span {
-    font-size: 1rem;
+    font-size: 1.2rem; 
+  }
+
+  h2, h3 {
+    font-size: 1.5rem; 
   }
 }

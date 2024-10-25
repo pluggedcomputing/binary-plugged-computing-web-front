@@ -25,6 +25,7 @@ body {
 h3 {
   color: var(--dark-blue);
   margin: 1rem 0;
+  font-size: 2rem; 
 }
 
 p {
@@ -33,25 +34,25 @@ p {
   text-align: center;
   margin: 1rem;
   font-weight: bold;
-  font-size: 1.2rem;
+  font-size: 1.5rem; 
 }
 
 .bi {
   color: var(--dark-blue);
-  font-size: 3rem;
+  font-size: 3.5rem; 
   position: absolute;
   top: 50%;
 }
 
 .answer-table {
   margin-top: 0.8rem;
-  }
+}
 
 .btn {
   background-color: var(--dark-blue);
   margin-top: 0.5rem;
-  font-size: 1.2rem;
-  padding-inline:  10px;
+  font-size: 1.4rem; 
+  padding-inline: 10px;
   padding-block: 10px;
   border-radius: 4px !important;
 }
@@ -88,9 +89,9 @@ p {
   text-align: center;
   -webkit-transform-style: preserve-3d;
   transform-style: preserve-3d;
-  -webkit-transform         : transform 1s;
-  -ms-transform         : transform 1s;
-  transform         : transform 1s;
+  -webkit-transform: transform 1s;
+  -ms-transform: transform 1s;
+  transform: transform 1s;
 }
 
 .front, .back {
@@ -109,9 +110,9 @@ p {
 .front {
   border: 3px solid var(--light-blue);
   border-radius: 4px;
-  -webkit-transform : rotateY(0deg);
-  -ms-transform     : rotateY(0deg);
-  transform         : rotateY(0deg);
+  -webkit-transform: rotateY(0deg);
+  -ms-transform: rotateY(0deg);
+  transform: rotateY(0deg);
   align-items: center;
   justify-content: space-around;
   display: flex;
@@ -121,9 +122,9 @@ p {
 .back {
   background-color: var(--dark-blue);
   border-radius: 4px;
-  -webkit-transform : rotateY(-180deg);
-  -ms-transform     : rotateY(-180deg);
-  transform         : rotateY(-180deg);
+  -webkit-transform: rotateY(-180deg);
+  -ms-transform: rotateY(-180deg);
+  transform: rotateY(-180deg);
 }
 
 .point-box {
@@ -163,7 +164,7 @@ p {
 }
 
 .byn-number {
-  font-size: 1.2rem;
+  font-size: 1.5rem; 
   font-weight: bold;
   color: var(--dark-blue);
 }
@@ -184,30 +185,13 @@ p {
   background-color: var(--answer-red);
 }
 
-/* @media only screen and (max-width: 767px) {
-
-  .bi {
-    font-size: 1.5rem;
-  }
-
-  .cards {
-    width: 60px;
-    height: 110px;
-  }
-
-  .point {
-    min-width: 8px;
-    min-height: 8px;
-  }
-} */
-
 @media only screen and (max-width: 515px) {
   p {
-    font-size: 1rem;
+    font-size: 1.2rem; 
   }
 
   .bi {
-    font-size: 1.5rem;
+    font-size: 2rem; 
     top: 40%;
   }
 
@@ -219,7 +203,7 @@ p {
   }
 
   .btn {
-    font-size: 1rem;
+    font-size: 1.2rem; 
   }
 
   .point {

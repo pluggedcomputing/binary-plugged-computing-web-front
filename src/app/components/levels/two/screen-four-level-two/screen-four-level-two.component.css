@@ -11,7 +11,7 @@ body {
 }
 
 .container div img {
-  width: 25%;
+  width: 30%;
   margin: 1rem;
 }
 
@@ -27,17 +27,19 @@ body {
 }
 
 h3 {
-  margin-top: 4rem !important;
+  margin-top: 4rem;
+  font-size: 2rem;
 }
 
-h2,h3 {
+h2, h3 {
   color: var(--dark-blue);
-  margin: 1rem;
+  margin: 1.2rem;
+  font-size: 2.2rem;
 }
 
 span {
   color: var(--dark-blue);
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   margin: 0;
   padding: 0;
 }
@@ -54,8 +56,8 @@ span {
   margin: 2%;
   border-radius: 50%;
   background-color: var(--dark-blue);
-  width: 75px;
-  height: 75px;
+  width: 85px;
+  height: 85px;
   text-align: center;
 }
 
@@ -71,11 +73,20 @@ a {
 
 @media only screen and (max-width: 527px) {
   .container div img {
-    width: 75%;
+    width: 70%;
     margin: 1rem;
   }
 
   span {
-    font-size: 1rem;
+    font-size: 1.2rem;
+  }
+
+  .nav-btn {
+    width: 70px;
+    height: 70px;
+  }
+
+  h2, h3 {
+    font-size: 1.8rem;
   }
 }

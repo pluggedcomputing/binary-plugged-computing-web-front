@@ -4,7 +4,6 @@ body {
 
 .container {
   width: 100%;
-
 }
 
 .content {
@@ -15,15 +14,28 @@ body {
   flex-direction: column;
 }
 
-
-
 h2 {
   color: var(--dark-blue);
   font-weight: 700;
-  margin: 2rem ;
+  margin: 2rem;
   font-size: 2.6rem; 
 }
 
+p {
+  color: var(--dark-blue);
+  width: 45%;
+  text-align: center;
+  margin: 1rem;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.bi {
+  color: var(--dark-blue);
+  font-size: 3rem;
+  position: absolute;
+  top: 50%;
+}
 
 .btn {
   width: 350px;
@@ -33,47 +45,41 @@ h2 {
   box-shadow: 0 8px 5px #07377a3f;
   font-size: 1.5rem;
   font-weight: bold;
-  
 }
 
-
-@media(max-width: 1320px) {
+@media (max-width: 1320px) {
   .container div img {
     margin-top: 6rem;
     width: 50%;
   }
 }
 
-@media(max-width: 1198px) {
+@media (max-width: 1198px) {
   .container div img {
     margin-top: 6rem;
     width: 70%;
   }
 }
 
-@media(max-width: 994px) {
+@media (max-width: 994px) {
   .container div img {
     margin-top: 6rem;
     width: 70%;
   }
 }
 
-@media(max-width: 777px) {
-
+@media (max-width: 777px) {
   .container div img {
     margin-top: 6rem;
     width: 80%;
   }
 
   h2 {
-    font-size: 1.4rem;
-  }
-  h3 {
-    font-size: 1rem;
+    font-size: 1.4rem; 
   }
 
   .btn {
     width: 300px;
-    font-size: 1.2rem;
+    font-size: 1.2rem; 
   }
 }

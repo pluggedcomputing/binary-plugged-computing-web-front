@@ -21,6 +21,7 @@
 h3 {
   color: var(--dark-blue);
   margin: 1rem 0 2rem 0;
+  font-size: 2.5rem; 
 }
 
 p {
@@ -29,12 +30,12 @@ p {
   height: 300px;
   text-align: justify;
   margin-top: 2rem;
-  font-size: 1.2rem;
+  font-size: 1.5rem; 
 }
 
 .bi {
   color: var(--dark-blue);
-  font-size: 3rem;
+  font-size: 3.5rem; 
 }
 
 @media(max-width: 991px) {
@@ -43,10 +44,10 @@ p {
   }
   p {
     width: 40%;
-    font-size: 1.2rem;
+    font-size: 1.5rem; 
   }
   .bi {
-    font-size: 2rem;
+    font-size: 2.5rem; 
   }
 }
 
@@ -56,10 +57,10 @@ p {
   }
   p {
     width: 60%;
-    font-size: 1rem;
+    font-size: 1.2rem; 
   }
   .bi {
-    font-size: 1.8rem;
+    font-size: 2.2rem; 
   }
 }
 
@@ -69,9 +70,9 @@ p {
   }
   p {
     width: 70%;
-    font-size: 0.8rem;
+    font-size: 1rem; 
   }
   .bi {
-    font-size: 1.5rem;
+    font-size: 2rem; 
   }
 }

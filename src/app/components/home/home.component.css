@@ -16,7 +16,7 @@ body {
 
 .container div img {
   margin-top: 1rem;
-  width: 35%;
+  width: 30%; 
 }
 
 h2 {
@@ -24,22 +24,22 @@ h2 {
   padding: 0.5rem;
   font-weight: 700;
   margin: 1rem 0 0 0;
-  font-size: 1.6rem;
+  font-size: 2rem; 
 }
 
 h3 {
   color: var(--dark-blue);
-  font-size: 1.4rem;
+  font-size: 1.6rem; 
   margin: 0 0 2rem 0;
 }
 
 .btn {
   width: 350px;
-  height: 50px;
+  height: 55px; 
   background-color: var(--dark-blue);
   margin: 1.5rem 0;
   box-shadow: 0 8px 5px #07377a3f;
-  font-size: 1.5rem;
+  font-size: 1.6rem; 
   font-weight: bold;
   padding: 0;
 }
@@ -47,21 +47,21 @@ h3 {
 @media(max-width: 1320px) {
   .container div img {
     margin-top: 6rem;
-    width: 50%;
+    width: 45%; 
   }
 }
 
 @media(max-width: 1198px) {
   .container div img {
     margin-top: 6rem;
-    width: 70%;
+    width: 60%; 
   }
 }
 
 @media(max-width: 994px) {
   .container div img {
     margin-top: 6rem;
-    width: 70%;
+    width: 65%; 
   }
 }
 
@@ -69,18 +69,18 @@ h3 {
 
   .container div img {
     margin-top: 6rem;
-    width: 80%;
+    width: 75%; 
   }
 
   h2 {
-    font-size: 1.4rem;
+    font-size: 1.6rem; 
   }
   h3 {
-    font-size: 1rem;
+    font-size: 1.2rem; 
   }
 
   .btn {
-    width: 300px;
-    font-size: 1.2rem;
+    width: 320px; 
+    font-size: 1.4rem; 
   }
 }

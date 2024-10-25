@@ -33,11 +33,12 @@ h3 {
 h2,h3 {
   color: var(--dark-blue);
   margin: 1rem;
+  font-size: 2rem; 
 }
 
 span {
   color: var(--dark-blue);
-  font-size: 1.4rem;
+  font-size: 1.6rem; 
   margin: 0;
   padding: 0;
 }
@@ -76,6 +77,10 @@ a {
   }
 
   span {
-    font-size: 1rem;
+    font-size: 1.2rem; 
+  }
+
+  h2,h3 {
+    font-size: 1.5rem; 
   }
 }
