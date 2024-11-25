@@ -114,10 +114,10 @@ export class ScreenTwoLevelSevenComponent implements OnInit {
 
   handleIncorrectAnswer(answer: string, btn: number): void {
     this.buttonClass(btn, false);
-    this.toastService.show('Tente outra vez.');
+    this.toastService.show('Tente outra vez.', 'error'); 
     this.attempts += 1;
     this.processQuestionResponse(answer, false);
-  }
+  }  
 
   buttonClass(button: number, status: boolean): void {
     const buttonClass = status ? "correct" : "incorrect";

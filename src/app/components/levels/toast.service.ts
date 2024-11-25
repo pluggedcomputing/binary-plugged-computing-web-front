@@ -1,21 +1,26 @@
 import { Injectable, TemplateRef } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ToastService {
-
   toasts: any[] = [];
 
-	show(textOrTpl: string | TemplateRef<any>, options: any = {}) {
-		this.toasts.push({ textOrTpl, ...options });
-	}
+  show(
+    textOrTpl: string | TemplateRef<any>,
+    type: 'success' | 'error' = 'success', 
+    options: any = {}
+  ) {
+    this.toasts.push({ textOrTpl, type, ...options });
 
-	remove(toast: any) {
-		this.toasts = this.toasts.filter((t: any) => t !== toast);
-	}
+    setTimeout(() => this.remove({ textOrTpl, type, ...options }), 3000);
+  }
 
-	clear() {
-		this.toasts.splice(0, this.toasts.length);
-	}
+  remove(toast: any) {
+    this.toasts = this.toasts.filter((t) => t !== toast);
+  }
+
+  clear() {
+    this.toasts = [];
+  }
 }

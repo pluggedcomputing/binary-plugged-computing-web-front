@@ -114,17 +114,17 @@ export class ScreenThreeLevelTwoComponent implements OnInit {
       } else if (this.numberActivity == "4") {
         this.handleFourthAnswer(btn);
       }
-
+  
       this.processQuestionResponse(answer, true);
-      this.toastService.show('Parabéns!');
+      this.toastService.show('Parabéns!', 'success');  
       setTimeout(() => {
         this.toastService.clear(); 
       }, 1500);
-
+  
     } else {
       this.handleIncorrectAnswer(answer, btn);
     }
-  }
+  }  
 
   processQuestionResponse(userResponse: string, isCorrect: boolean): void {
     const question: Question = new Question(this.idUser, this.idApp, this.phaseActivity, this.numberActivity, userResponse, this.expectedResponse, isCorrect, this.dateResponse, this.typeOfQuestion);
@@ -183,10 +183,10 @@ export class ScreenThreeLevelTwoComponent implements OnInit {
 
   handleIncorrectAnswer(answer: string, btn: number): void {
     this.buttonClass(btn, false);
-    this.toastService.show('Tente outra vez.');
+    this.toastService.show('Tente outra vez.', 'error');  
     this.attempts += 1;
     this.processQuestionResponse(answer, false);
-  }
+  }  
 
   toggleBynaries(): void {
     if (this.flip1 === 'active') {

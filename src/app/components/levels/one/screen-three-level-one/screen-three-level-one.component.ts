@@ -27,10 +27,9 @@ import { SessionStorageService } from 'src/app/service/session-storage/session-s
       transition('active => inactive', animate('500ms ease-out')),
       transition('inactive => active', animate('500ms ease-in')),
     ]),
-  ]
+  ],
 })
 export class ScreenThreeLevelOneComponent implements OnInit {
-
   flip1: string = 'inactive';
   flip2: string = 'active';
   flip4: string = 'active';
@@ -43,28 +42,34 @@ export class ScreenThreeLevelOneComponent implements OnInit {
   byn8: number = 1;
   byn16: number = 0;
 
-  btnClass1: string = "";
-  btnClass2: string = "";
-  btnClass3: string = "";
-  btnClass4: string = "";
+  btnClass1: string = '';
+  btnClass2: string = '';
+  btnClass3: string = '';
+  btnClass4: string = '';
 
   attempts: number = 0;
-  
-  idUser: string = "";
-  idApp: string = "WEB-BINARIOS 1.0";
-  phaseActivity: string = "1";
-  numberActivity: string = "1";
-  typeOfQuestion: string = "MULTIPLA ESCOLHA";
-  expectedResponse: string = "Possuem metade do valor anterior";
+
+  idUser: string = '';
+  idApp: string = 'WEB-BINARIOS 1.0';
+  phaseActivity: string = '1';
+  numberActivity: string = '1';
+  typeOfQuestion: string = 'MULTIPLA ESCOLHA';
+  expectedResponse: string = 'Possuem metade do valor anterior';
   dateResponse: Date;
-  
-  question: string = "O que você percebeu sobre o número de pontos nos cartões?";
-  answers: string[] = ["Possuem metade do valor anterior", "São valores aleatórios", "São a soma do próximo com o anterior", "Estão em ordem crescente"];
+
+  question: string =
+    'O que você percebeu sobre o número de pontos nos cartões?';
+  answers: string[] = [
+    'Possuem metade do valor anterior',
+    'São valores aleatórios',
+    'São a soma do próximo com o anterior',
+    'Estão em ordem crescente',
+  ];
 
   constructor(
-    private router: Router, 
+    private router: Router,
     public toastService: ToastService,
-    private questionsService: QuestionsService, 
+    private questionsService: QuestionsService,
     private sessionStorageService: SessionStorageService
   ) {
     this.dateResponse = new Date();
@@ -92,28 +97,46 @@ export class ScreenThreeLevelOneComponent implements OnInit {
 
   processAnswer(answer: string, btn: number): void {
     if (answer === this.expectedResponse) {
-      if (this.numberActivity === "1") {
+      if (this.numberActivity === '1') {
         this.handleFirstAnswer(btn);
-      } else if (this.numberActivity === "2") {
+      } else if (this.numberActivity === '2') {
         this.handleSecondAnswer(btn);
-      } else if (this.numberActivity === "3") {
+      } else if (this.numberActivity === '3') {
         this.handleThirdAnswer(btn);
       }
       this.processQuestionResponse(answer, true);
-      this.toastService.show('Parabéns!'); 
+      this.toastService.show('Parabéns!', 'success'); 
     } else {
       this.handleIncorrectAnswer(answer, btn);
     }
   }
-
+  
+  handleIncorrectAnswer(answer: string, btn: number): void {
+    this.buttonClass(btn, false);
+    this.toastService.show('Tente outra vez.', 'error'); 
+    this.attempts += 1;
+    console.log(this.attempts);
+    this.processQuestionResponse(answer, false);
+  }
+  
   processQuestionResponse(userResponse: string, isCorrect: boolean): void {
-    const question = new Question(this.idUser, this.idApp, this.phaseActivity, this.numberActivity, userResponse, this.expectedResponse, isCorrect, this.dateResponse, this.typeOfQuestion);
+    const question = new Question(
+      this.idUser,
+      this.idApp,
+      this.phaseActivity,
+      this.numberActivity,
+      userResponse,
+      this.expectedResponse,
+      isCorrect,
+      this.dateResponse,
+      this.typeOfQuestion
+    );
     this.questionsService.saveResponseQuestion(question).subscribe(
-      response => {
-        console.log("Question saved successfully:", response);
+      (response) => {
+        console.log('Question saved successfully:', response);
       },
-      error => {
-        console.error("Error saving question:", error);
+      (error) => {
+        console.error('Error saving question:', error);
       }
     );
   }
@@ -121,22 +144,24 @@ export class ScreenThreeLevelOneComponent implements OnInit {
   handleFirstAnswer(btn: number): void {
     this.buttonClass(btn, true);
     setTimeout(() => {
-      this.answers = ["24", "20", "32", "18"];
-      this.question = "Quantos pontos teria o próximo cartão à esquerda?";
-      this.numberActivity = "2";
-      this.expectedResponse = "32";
+      this.answers = ['24', '20', '32', '18'];
+      this.question =
+        'Quantos pontos teria o próximo cartão à esquerda?';
+      this.numberActivity = '2';
+      this.expectedResponse = '32';
       this.answers.sort(() => Math.random() - 0.5);
-      this.toastService.clear(); 
+      this.toastService.clear();
     }, 1000);
   }
 
   handleSecondAnswer(btn: number): void {
     this.buttonClass(btn, true);
     setTimeout(() => {
-      this.answers = ["01101", "10001", "10011", "01001"];
-      this.question = "Como seria o número 17 em binário? <br> Dica: veja os números abaixo dos cartões.";
-      this.numberActivity = "3";
-      this.expectedResponse = "10001";
+      this.answers = ['01101', '10001', '10011', '01001'];
+      this.question =
+        'Como seria o número 17 em binário? <br> Dica: veja os números abaixo dos cartões.';
+      this.numberActivity = '3';
+      this.expectedResponse = '10001';
       this.answers.sort(() => Math.random() - 0.5);
       this.toastService.clear();
     }, 1000);
@@ -145,17 +170,9 @@ export class ScreenThreeLevelOneComponent implements OnInit {
   handleThirdAnswer(btn: number): void {
     this.buttonClass(btn, true);
     setTimeout(() => {
-      this.toastService.clear(); 
+      this.toastService.clear();
       this.router.navigate(['fase-1-4']);
     }, 1000);
-  }
-
-  handleIncorrectAnswer(answer: string, btn: number): void {
-    this.buttonClass(btn, false);
-    this.toastService.show('Tente outra vez.');
-    this.attempts += 1;
-    console.log(this.attempts);
-    this.processQuestionResponse(answer, false);
   }
 
   toggleBynaries(): void {
@@ -168,20 +185,28 @@ export class ScreenThreeLevelOneComponent implements OnInit {
 
   buttonClass(button: number, status: boolean): void {
     if (button === 1) {
-      this.btnClass1 = status ? "correct" : "incorrect";
-      setTimeout(() => { this.btnClass1 = ""; }, 1000);
+      this.btnClass1 = status ? 'correct' : 'incorrect';
+      setTimeout(() => {
+        this.btnClass1 = '';
+      }, 1000);
     }
     if (button === 2) {
-      this.btnClass2 = status ? "correct" : "incorrect";
-      setTimeout(() => { this.btnClass2 = ""; }, 1000);
+      this.btnClass2 = status ? 'correct' : 'incorrect';
+      setTimeout(() => {
+        this.btnClass2 = '';
+      }, 1000);
     }
     if (button === 3) {
-      this.btnClass3 = status ? "correct" : "incorrect";
-      setTimeout(() => { this.btnClass3 = ""; }, 1000);
+      this.btnClass3 = status ? 'correct' : 'incorrect';
+      setTimeout(() => {
+        this.btnClass3 = '';
+      }, 1000);
     }
     if (button === 4) {
-      this.btnClass4 = status ? "correct" : "incorrect";
-      setTimeout(() => { this.btnClass4 = ""; }, 1000);
+      this.btnClass4 = status ? 'correct' : 'incorrect';
+      setTimeout(() => {
+        this.btnClass4 = '';
+      }, 1000);
     }
   }
 }

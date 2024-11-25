@@ -118,11 +118,11 @@ export class ScreenThreeLevelSixComponent implements OnInit {
 
   handleIncorrectAnswer(answer: string, btn: number): void {
     this.buttonClass(btn, false);
-    this.toastService.show('Tente outra vez.');
+    this.toastService.show('Tente outra vez.', 'error'); 
     this.attempts += 1;
     console.log(this.attempts);
-    this.processQuestionResponse(answer,false);
-  }
+    this.processQuestionResponse(answer, false);
+  }  
 
   buttonClass(button: number, status: boolean): void {
     if (button == 1) {

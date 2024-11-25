@@ -64,7 +64,7 @@ export class ScreenThreeLevelThreeComponent implements OnInit {
   changeAnswers(value: string): void {
     if (value === this.expectedResponse && this.imageRef === 1) {
       this.buttonClass(true);
-      this.toastService.show('Parabéns!');
+      this.toastService.show('Parabéns!', 'success');  
       setTimeout(() => {
         this.toastService.clear(); 
         this.question = "Que número decimal está sendo representado por esses códigos?";
@@ -77,7 +77,7 @@ export class ScreenThreeLevelThreeComponent implements OnInit {
 
     } else if (value === this.expectedResponse && this.imageRef === 2) {
       this.buttonClass(true);
-      this.toastService.show('Parabéns!');
+      this.toastService.show('Parabéns!', 'success');  
       setTimeout(() => {
         this.toastService.clear();
         this.createForm();
@@ -89,7 +89,7 @@ export class ScreenThreeLevelThreeComponent implements OnInit {
 
     } else if (value === this.expectedResponse && this.imageRef === 3) {
       this.buttonClass(true);
-      this.toastService.show('Parabéns!');
+      this.toastService.show('Parabéns!', 'success');  
       setTimeout(() => {
         this.toastService.clear();
         this.createForm();
@@ -101,7 +101,7 @@ export class ScreenThreeLevelThreeComponent implements OnInit {
 
     } else if (value === this.expectedResponse && this.imageRef === 4) {
       this.buttonClass(true);
-      this.toastService.show('Parabéns!');
+      this.toastService.show('Parabéns!', 'success');  
       setTimeout(() => {
         this.toastService.clear();
         this.createForm();
@@ -113,7 +113,7 @@ export class ScreenThreeLevelThreeComponent implements OnInit {
 
     } else if (value === this.expectedResponse && this.imageRef === 5) {
       this.buttonClass(true);
-      this.toastService.show('Parabéns!');
+      this.toastService.show('Parabéns!', 'success');  
       setTimeout(() => {
         this.toastService.clear();
         this.createForm();
@@ -125,7 +125,7 @@ export class ScreenThreeLevelThreeComponent implements OnInit {
 
     } else if (value === this.expectedResponse && this.imageRef === 6) {
       this.buttonClass(true);
-      this.toastService.show('Parabéns!');
+      this.toastService.show('Parabéns!', 'success');  
       setTimeout(() => {
         this.toastService.clear();
         this.createForm();
@@ -137,7 +137,7 @@ export class ScreenThreeLevelThreeComponent implements OnInit {
 
     } else if (value === this.expectedResponse && this.imageRef === 7) {
       this.buttonClass(true);
-      this.toastService.show('Parabéns!');
+      this.toastService.show('Parabéns!', 'success');  
       setTimeout(() => {
         this.toastService.clear();
         this.createForm();
@@ -149,7 +149,7 @@ export class ScreenThreeLevelThreeComponent implements OnInit {
 
     } else if (value === this.expectedResponse && this.imageRef === 8) {
       this.buttonClass(true);
-      this.toastService.show('Parabéns!');
+      this.toastService.show('Parabéns!', 'success');  
       setTimeout(() => {
         this.toastService.clear();
         this.createForm();
@@ -161,7 +161,7 @@ export class ScreenThreeLevelThreeComponent implements OnInit {
 
     } else if (value === this.expectedResponse && this.imageRef === 9) {
       this.buttonClass(true);
-      this.toastService.show('Parabéns!');
+      this.toastService.show('Parabéns!', 'success');  
       setTimeout(() => {
         this.toastService.clear();
         this.createForm();
@@ -173,7 +173,7 @@ export class ScreenThreeLevelThreeComponent implements OnInit {
 
     } else if (value === this.expectedResponse && this.imageRef === 10) {
       this.buttonClass(true);
-      this.toastService.show('Parabéns!');
+      this.toastService.show('Parabéns!', 'success');  
       setTimeout(() => {
         this.toastService.clear();
         this.router.navigate(['fase-3-4']);
@@ -181,7 +181,7 @@ export class ScreenThreeLevelThreeComponent implements OnInit {
 
     } else {
       this.buttonClass(false);
-      this.toastService.show('Tente outra vez.');
+      this.toastService.show('Tente outra vez.', 'error');  
       this.attempts += 1;
       this.processQuestionResponse(value, false);
     }

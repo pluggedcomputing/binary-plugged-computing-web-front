@@ -65,7 +65,8 @@ export class ScreenThreeLevelFiveComponent implements OnInit {
 
   changeAnswers(value: string): void {
     let codifiedName: string = "";
-    if(value !== "" && this.imageRef === 1) {
+    
+    if (value !== "" && this.imageRef === 1) {
       this.buttonClass(true);
       codifiedName = this.textToBinary(value.toLowerCase());
       this.originalName = value.toLowerCase();
@@ -77,21 +78,22 @@ export class ScreenThreeLevelFiveComponent implements OnInit {
       }, 1000);
     } else if ((value.toLowerCase() === `muito prazer ${this.originalName}`) && this.imageRef === 2) {
       this.buttonClass(true);
-      this.toastService.show('Parabéns!'); 
+      this.toastService.show('Parabéns!', 'success');
       setTimeout(() => {
-        this.toastService.clear(); 
+        this.toastService.clear();
         this.processQuestionResponse(value, true);
         this.router.navigate(['fase-5-4']);
-      }, 1000); 
+      }, 1000);
     } else if (value.toLowerCase() !== `muito prazer ${this.originalName}` && this.imageRef === 2) {
-      this.processQuestionResponse(value, false);   
+      this.processQuestionResponse(value, false);
       this.buttonClass(false);
+      this.toastService.show('Tente outra vez.', 'error');  
     } else {
       this.buttonClass(false);
-      this.toastService.show(this.imageRef === 1 ? 'Este campo não pode ficar em branco.' : 'Tente outra vez.');
+      this.toastService.show(this.imageRef === 1 ? 'Este campo não pode ficar em branco.' : 'Tente outra vez.', 'error');
       this.attempts += 1;
     }
-  }
+  }  
 
   buttonClass(status: boolean): void {
     this.btnClass1 = status ? "correct" : "incorrect";

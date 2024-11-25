@@ -64,7 +64,7 @@ export class ScreenThreeLevelFourComponent implements OnInit {
   changeAnswers(value: string): void {
     if (value === this.expectedResponse && this.imageRef === 1) {
       this.buttonClass(true);
-      this.toastService.show('Parabéns!');
+      this.toastService.show('Parabéns!', 'success');
       setTimeout(() => {
         this.toastService.clear(); 
         this.question = "Qual o número decimal correspondente a esta configuração de lâmpadas?";
@@ -74,10 +74,9 @@ export class ScreenThreeLevelFourComponent implements OnInit {
         this.numberActivity = "2";
         this.expectedResponse = "10";
       }, 1000);
-
     } else if (value === this.expectedResponse && this.imageRef === 2) {
       this.buttonClass(true);
-      this.toastService.show('Parabéns!');
+      this.toastService.show('Parabéns!', 'success');
       setTimeout(() => {
         this.toastService.clear();
         this.createForm();
@@ -86,10 +85,9 @@ export class ScreenThreeLevelFourComponent implements OnInit {
         this.numberActivity = "3";
         this.expectedResponse = "21";
       }, 1000);
-
     } else if (value === this.expectedResponse && this.imageRef === 3) {
       this.buttonClass(true);
-      this.toastService.show('Parabéns!');
+      this.toastService.show('Parabéns!', 'success');
       setTimeout(() => {
         this.toastService.clear();
         this.createForm();
@@ -98,10 +96,9 @@ export class ScreenThreeLevelFourComponent implements OnInit {
         this.numberActivity = "4";
         this.expectedResponse = "4";
       }, 1000);
-
     } else if (value === this.expectedResponse && this.imageRef === 4) {
       this.buttonClass(true);
-      this.toastService.show('Parabéns!');
+      this.toastService.show('Parabéns!', 'success');
       setTimeout(() => {
         this.toastService.clear();
         this.createForm();
@@ -110,10 +107,9 @@ export class ScreenThreeLevelFourComponent implements OnInit {
         this.numberActivity = "5";
         this.expectedResponse = "5";
       }, 1000);
-
     } else if (value === this.expectedResponse && this.imageRef === 5) {
       this.buttonClass(true);
-      this.toastService.show('Parabéns!');
+      this.toastService.show('Parabéns!', 'success');
       setTimeout(() => {
         this.toastService.clear();
         this.createForm();
@@ -122,10 +118,9 @@ export class ScreenThreeLevelFourComponent implements OnInit {
         this.numberActivity = "6";
         this.expectedResponse = "5";
       }, 1000);
-
     } else if (value === this.expectedResponse && this.imageRef === 6) {
       this.buttonClass(true);
-      this.toastService.show('Parabéns!');
+      this.toastService.show('Parabéns!', 'success');
       setTimeout(() => {
         this.toastService.clear();
         this.createForm();
@@ -134,10 +129,9 @@ export class ScreenThreeLevelFourComponent implements OnInit {
         this.numberActivity = "7";
         this.expectedResponse = "19";
       }, 1000);
-
     } else if (value === this.expectedResponse && this.imageRef === 7) {
       this.buttonClass(true);
-      this.toastService.show('Parabéns!');
+      this.toastService.show('Parabéns!', 'success');
       setTimeout(() => {
         this.toastService.clear();
         this.createForm();
@@ -146,10 +140,9 @@ export class ScreenThreeLevelFourComponent implements OnInit {
         this.numberActivity = "8";
         this.expectedResponse = "20";
       }, 1000);
-
     } else if (value === this.expectedResponse && this.imageRef === 8) {
       this.buttonClass(true);
-      this.toastService.show('Parabéns!');
+      this.toastService.show('Parabéns!', 'success');
       setTimeout(() => {
         this.toastService.clear();
         this.createForm();
@@ -158,10 +151,9 @@ export class ScreenThreeLevelFourComponent implements OnInit {
         this.numberActivity = "9";
         this.expectedResponse = "15";
       }, 1000);
-
     } else if (value === this.expectedResponse && this.imageRef === 9) {
       this.buttonClass(true);
-      this.toastService.show('Parabéns!');
+      this.toastService.show('Parabéns!', 'success');
       setTimeout(() => {
         this.toastService.clear();
         this.createForm();
@@ -170,10 +162,9 @@ export class ScreenThreeLevelFourComponent implements OnInit {
         this.numberActivity = "10";
         this.expectedResponse = "21";
       }, 1000);
-
     } else if (value === this.expectedResponse && this.imageRef === 10) {
       this.buttonClass(true);
-      this.toastService.show('Parabéns!');
+      this.toastService.show('Parabéns!', 'success');
       setTimeout(() => {
         this.toastService.clear();
         this.createForm();
@@ -182,10 +173,9 @@ export class ScreenThreeLevelFourComponent implements OnInit {
         this.numberActivity = "11";
         this.expectedResponse = "16";
       }, 1000);
-
     } else if (value === this.expectedResponse && this.imageRef === 11) {
       this.buttonClass(true);
-      this.toastService.show('Parabéns!');
+      this.toastService.show('Parabéns!', 'success');
       setTimeout(() => {
         this.toastService.clear();
         this.createForm();
@@ -194,10 +184,9 @@ export class ScreenThreeLevelFourComponent implements OnInit {
         this.numberActivity = "12";
         this.expectedResponse = "18";
       }, 1000);
-
     } else if (value === this.expectedResponse && this.imageRef === 12) {
       this.buttonClass(true);
-      this.toastService.show('Parabéns!');
+      this.toastService.show('Parabéns!', 'success');
       setTimeout(() => {
         this.toastService.clear();
         this.createForm();
@@ -206,10 +195,9 @@ export class ScreenThreeLevelFourComponent implements OnInit {
         this.numberActivity = "13";
         this.expectedResponse = "5";
       }, 1000);
-
     } else if (value === this.expectedResponse && this.imageRef === 13) {
       this.buttonClass(true);
-      this.toastService.show('Parabéns!');
+      this.toastService.show('Parabéns!', 'success');
       setTimeout(() => {
         this.toastService.clear();
         this.createForm();
@@ -218,10 +206,9 @@ export class ScreenThreeLevelFourComponent implements OnInit {
         this.numberActivity = "14";
         this.expectedResponse = "19";
       }, 1000);
-
     } else if (value === this.expectedResponse && this.imageRef === 14) {
       this.buttonClass(true);
-      this.toastService.show('Parabéns!');
+      this.toastService.show('Parabéns!', 'success');
       setTimeout(() => {
         this.toastService.clear();
         this.createForm();
@@ -230,7 +217,6 @@ export class ScreenThreeLevelFourComponent implements OnInit {
         this.numberActivity = "15";
         this.expectedResponse = "15";
       }, 1000);
-
     } else if (value === this.expectedResponse && this.imageRef === 15) {
       this.buttonClass(true);
       setTimeout(() => {
@@ -241,7 +227,6 @@ export class ScreenThreeLevelFourComponent implements OnInit {
         this.expectedResponse = "ajude estou preso";
         this.numberActivity = "16";
       }, 1000);
-
     } else if (value.toLowerCase() === this.expectedResponse && this.imageRef === 16) {
       this.buttonClass(true);
       this.toastService.show('Parabéns!');
@@ -250,10 +235,9 @@ export class ScreenThreeLevelFourComponent implements OnInit {
         this.processQuestionResponse(value, true);
         this.router.navigate(['fase-4-4']);
       }, 1000);
-
     } else {
       this.buttonClass(false);
-      this.toastService.show('Tente outra vez.');
+      this.toastService.show('Tente outra vez.', 'error');
       this.attempts += 1;
       this.processQuestionResponse(value, false);
     }
