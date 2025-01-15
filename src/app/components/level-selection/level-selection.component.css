@@ -128,3 +128,21 @@ p {
     margin: 0;
   }
 }
+
+.settings-btn {
+  position: fixed;  
+  top: 20px;
+  right: 20px;
+  background-color: transparent;
+  border: none;
+  font-size: 30px;
+  color: var(--dark-blue);  
+  cursor: pointer;
+  z-index: 9999;  
+  max-width: 50px;  
+  max-height: 50px;  
+}
+
+.settings-btn:hover {
+  color: #0056b3;  
+}

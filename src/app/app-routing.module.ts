@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { LevelSelectionComponent } from './components/level-selection/level-selection.component';
+import { SettingsComponent } from './components/settings/settings.component';
 import { ScreenEightLevelEightComponent } from './components/levels/eight/screen-eight-level-eight/screen-eight-level-eight.component';
 import { ScreenFiveLevelEightComponent } from './components/levels/eight/screen-five-level-eight/screen-five-level-eight.component';
 import { ScreenFourLevelEightComponent } from './components/levels/eight/screen-four-level-eight/screen-four-level-eight.component';
@@ -47,6 +48,7 @@ const routes: Routes = [
   {path: "email-input",  component: EmailInputComponent},
   {path: "user-feedback-question", component: UserFeedbackQuestionComponent},
   {path: 'fases', component: LevelSelectionComponent},
+  {path: 'settings', component: SettingsComponent },
   {path: 'fase-1-1', component: ScreenOneLevelOneComponent},
   {path: 'fase-1-2', component: ScreenTwoLevelOneComponent},
   {path: 'fase-1-3', component: ScreenThreeLevelOneComponent},
