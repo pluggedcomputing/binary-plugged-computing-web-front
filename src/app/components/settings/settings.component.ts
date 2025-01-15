@@ -16,10 +16,13 @@ export class SettingsComponent {
 
   
   clearProgress(): void {
-    this.binariosGameService.clearProgress(); 
-    alert('Todos os dados foram apagados!');
-    this.navigateToLevels();  
-  }
+    const confirmClear = confirm('Tem certeza de que deseja apagar todos os dados?');
+    if (confirmClear) {
+      this.binariosGameService.clearProgress(); 
+      alert('Todos os dados foram apagados!');
+      this.navigateToLevels();  
+    }
+  }  
 
  
   navigateToLevels(): void {
