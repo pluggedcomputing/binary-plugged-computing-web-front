@@ -127,13 +127,57 @@
       </div>
       <p class="w-75" [innerHTML]="question"></p>
       <div class="answer-table row justify-content-center w-100">
-        <button type="button" class="btn btn-primary col-md-5 col-sm-3 btn-block" [ngClass]="[btnClass1]" (click)="processAnswer(answers[0], 1)">{{answers[0]}}</button>
+        <button type="button" 
+                class="btn btn-primary col-md-5 col-sm-3 btn-block" 
+                [ngClass]="{
+                  'correct': userResponses.includes(answers[0]) && answers[0] === expectedResponse,
+                  'incorrect': userResponses.includes(answers[0]) && answers[0] !== expectedResponse,
+                  'selected': userResponses.includes(answers[0]),
+                  'disabled': challengeState[numberActivity].allButtonsDisabled && !userResponses.includes(answers[0])
+                }"
+                [disabled]="userResponses.includes(answers[0]) || challengeState[numberActivity].allButtonsDisabled" 
+                (click)="processAnswer(answers[0], 1)">
+          {{answers[0]}}
+        </button>
         <div class="w-100"></div>
-        <button type="button" class="btn btn-primary col-md-5 col-sm-3 btn-block" [ngClass]="[btnClass2]" (click)="processAnswer(answers[1], 2)">{{answers[1]}}</button>
+        <button type="button" 
+                class="btn btn-primary col-md-5 col-sm-3 btn-block" 
+                [ngClass]="{
+                  'correct': userResponses.includes(answers[1]) && answers[1] === expectedResponse,
+                  'incorrect': userResponses.includes(answers[1]) && answers[1] !== expectedResponse,
+                  'selected': userResponses.includes(answers[1]),
+                  'disabled': challengeState[numberActivity].allButtonsDisabled && !userResponses.includes(answers[1])
+                }"
+                [disabled]="userResponses.includes(answers[1]) || challengeState[numberActivity].allButtonsDisabled" 
+                (click)="processAnswer(answers[1], 2)">
+          {{answers[1]}}
+        </button>
         <div class="w-100"></div>
-        <button type="button" class="btn btn-primary col-md-5 col-sm-3 btn-block" [ngClass]="[btnClass3]" (click)="processAnswer(answers[2], 3)">{{answers[2]}}</button>
+        <button type="button" 
+                class="btn btn-primary col-md-5 col-sm-3 btn-block" 
+                [ngClass]="{
+                  'correct': userResponses.includes(answers[2]) && answers[2] === expectedResponse,
+                  'incorrect': userResponses.includes(answers[2]) && answers[2] !== expectedResponse,
+                  'selected': userResponses.includes(answers[2]),
+                  'disabled': challengeState[numberActivity].allButtonsDisabled && !userResponses.includes(answers[2])
+                }"
+                [disabled]="userResponses.includes(answers[2]) || challengeState[numberActivity].allButtonsDisabled" 
+                (click)="processAnswer(answers[2], 3)">
+          {{answers[2]}}
+        </button>
         <div class="w-100"></div>
-        <button type="button" class="btn btn-primary col-md-5 col-sm-3 btn-block" [ngClass]="[btnClass4]" (click)="processAnswer(answers[3], 4)">{{answers[3]}}</button>
+        <button type="button" 
+                class="btn btn-primary col-md-5 col-sm-3 btn-block" 
+                [ngClass]="{
+                  'correct': userResponses.includes(answers[3]) && answers[3] === expectedResponse,
+                  'incorrect': userResponses.includes(answers[3]) && answers[3] !== expectedResponse,
+                  'selected': userResponses.includes(answers[3]),
+                  'disabled': challengeState[numberActivity].allButtonsDisabled && !userResponses.includes(answers[3])
+                }"
+                [disabled]="userResponses.includes(answers[3]) || challengeState[numberActivity].allButtonsDisabled" 
+                (click)="processAnswer(answers[3], 4)">
+          {{answers[3]}}
+        </button>
       </div>
     </div>
   </div>
