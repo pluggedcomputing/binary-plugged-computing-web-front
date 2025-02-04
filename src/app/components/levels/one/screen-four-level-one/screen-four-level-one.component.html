@@ -12,10 +12,17 @@
       <h3><strong>FASE 1</strong></h3>
       <img src="assets/win/win-level.png" alt="Cover">
 
-
       <div class="text-box">
         <h2><strong>PARABÉNS</strong></h2>
         <span>Você concluiu a FASE 1 do aplicativo Binários!</span>
+        <div class="star-rating">
+          <ng-container *ngFor="let star of starsArray">
+            <i class="bi bi-star-fill" style="color: gold;"></i>  
+          </ng-container>
+          <ng-container *ngFor="let star of emptyStarsArray">
+            <i class="bi bi-star" style="color: gray;"></i>  
+          </ng-container>
+        </div>
       </div>
 
       <div class="nav-buttons w-100">

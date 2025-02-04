@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { FormBuilder, Validators } from '@angular/forms';
-import { BinariosGameService } from 'src/app/service/binarios-game/binarios-game.service'; // Serviço para interagir com o localStorage
+import { BinariosGameService } from 'src/app/service/binarios-game/binarios-game.service';
 
 @Component({
   selector: 'app-screen-three-level-two',
@@ -150,14 +150,20 @@ export class ScreenThreeLevelTwoComponent implements OnInit {
 
   processAnswer(answer: string, btn: number): void {
     
-    if (answer === this.expectedResponse) {
-      this.buttonClass(btn, true); 
-      this.userResponses.push(answer); 
+    this.userResponses.push(answer);
   
-      
-      this.score++;
+    const isCorrect = (answer === this.expectedResponse);
   
+    if (isCorrect) {
       
+      this.buttonClass(btn, true);
+      this.toastService.show('Parabéns!', 'success');
+      this.challengeState[this.numberActivity].allButtonsDisabled = true;
+  
+      setTimeout(() => {
+        this.toastService.clear(); 
+      }, 1000);
+  
       const progress = {
         userResponses: this.userResponses,
         score: this.score,
@@ -165,7 +171,6 @@ export class ScreenThreeLevelTwoComponent implements OnInit {
         currentActivity: this.currentActivity,
       };
   
-      
       this.binariosGameService.saveProgress(
         this.userResponses,
         this.score,
@@ -173,29 +178,38 @@ export class ScreenThreeLevelTwoComponent implements OnInit {
         this.currentActivity,
         this.expectedResponse,
         2 
-      ); 
+      );
   
-      
-      if (this.numberActivity === '1') {
-        this.handleFirstAnswer(btn);
-      } else if (this.numberActivity === '2') {
-        this.handleSecondAnswer(btn);
-      } else if (this.numberActivity === '3') {
-        this.handleThirdAnswer(btn);
-      } else if (this.numberActivity === '4') {
-        this.handleFourthAnswer(btn);
-      }
-  
-      
-      this.toastService.show('Parabéns!', 'success');
-  
-      
-      this.challengeState[this.numberActivity].allButtonsDisabled = true;
+      setTimeout(() => {
+        if (this.numberActivity === '1') {
+          this.handleFirstAnswer(btn);
+        } else if (this.numberActivity === '2') {
+          this.handleSecondAnswer(btn);
+        } else if (this.numberActivity === '3') {
+          this.handleThirdAnswer(btn);
+        } else if (this.numberActivity === '4') {
+          this.handleFourthAnswer(btn);
+        }
+      }, 1000);
     } else {
-      
-      this.handleIncorrectAnswer(answer, btn);
+
+      this.buttonClass(btn, false);
+      this.toastService.show('Tente outra vez.', 'error');
+  
+      setTimeout(() => {
+        this.toastService.clear(); 
+      }, 1000);
+  
+      this.challengeState[this.numberActivity].allButtonsDisabled = false;
     }
-  }   
+  
+    const progress = {
+      userResponses: this.userResponses,
+      challengeState: this.challengeState,
+      currentActivity: this.currentActivity,
+    };
+    this.saveProgress(progress, 2, this.expectedResponse);  
+  }  
 
   handleFirstAnswer(btn: number): void {
     this.buttonClass(btn, true);

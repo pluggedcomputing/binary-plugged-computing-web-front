@@ -105,44 +105,60 @@ export class ScreenThreeLevelOneComponent implements OnInit {
   }  
 
   saveProgress(progress: any, level: number, expectedResponse: string): void {
+    
+    const progressWithScore = {
+      ...progress,
+      score: this.score,  
+    };
   
     
     this.binariosGameService.saveProgress(
-      progress.userResponses, 
-      progress.score, 
-      progress.challengeState, 
-      progress.currentActivity, 
-      expectedResponse, 
-      level 
-    ); 
+      progressWithScore.userResponses,
+      progressWithScore.score,  
+      progressWithScore.challengeState,
+      progressWithScore.currentActivity,
+      expectedResponse,
+      level
+    );
   }  
 
   processAnswer(answer: string, btn: number): void {
     
-    if (answer === this.expectedResponse) {
-      this.buttonClass(btn, true); 
-      this.userResponses.push(answer); 
+    this.userResponses.push(answer);
   
-      
-      this.score++; 
+    const isCorrect = (answer === this.expectedResponse);
   
+    if (isCorrect) {
       
-      const progress = {
-        userResponses: this.userResponses,
-        score: this.score,
-        challengeState: this.challengeState,
-        currentActivity: this.currentActivity,
-      };
-  
-      
-      this.saveProgress(progress, 1, this.expectedResponse);
-  
-      
+      this.buttonClass(btn, true);
       this.toastService.show('Parabéns!', 'success');
+      this.challengeState[this.numberActivity].allButtonsDisabled = true;
   
-      
       setTimeout(() => {
-        
+        this.toastService.clear(); 
+      }, 1000);
+  
+    } else {
+      
+      this.buttonClass(btn, false);
+      this.toastService.show('Tente outra vez.', 'error');
+  
+      setTimeout(() => {
+        this.toastService.clear(); 
+      }, 1000);
+  
+      this.challengeState[this.numberActivity].allButtonsDisabled = false;
+    }
+  
+    const progress = {
+      userResponses: this.userResponses,
+      challengeState: this.challengeState,
+      currentActivity: this.currentActivity,
+    };
+    this.saveProgress(progress, 1, this.expectedResponse);  
+  
+    if (isCorrect) {
+      setTimeout(() => {
         if (this.numberActivity === '1') {
           this.handleFirstAnswer(btn);
         } else if (this.numberActivity === '2') {
@@ -150,16 +166,31 @@ export class ScreenThreeLevelOneComponent implements OnInit {
         } else if (this.numberActivity === '3') {
           this.handleThirdAnswer(btn);
         }
-      }, 1000); 
-  
-      
-      this.challengeState[this.numberActivity].allButtonsDisabled = true;
-    } else {
-      
-      this.handleIncorrectAnswer(answer, btn);
+      }, 1000);
     }
   }  
-
+  
+  calculateFinalScore(): void {
+    const totalQuestions = 3; 
+    const totalAttempts = this.userResponses.length; 
+    const correctAnswers = totalQuestions; 
+  
+    
+    const totalErrors = totalAttempts - correctAnswers;
+  
+    
+    const errorPercentage = totalErrors / totalAttempts;
+  
+    
+    const maxStars = 5;
+    const score = Math.max(1, Math.round((1 - errorPercentage) * maxStars));
+  
+    
+    this.score = score;
+  
+    console.log('Score final:', this.score);  
+  }  
+  
   handleFirstAnswer(btn: number): void {
     this.buttonClass(btn, true);
     setTimeout(() => {
@@ -193,9 +224,22 @@ export class ScreenThreeLevelOneComponent implements OnInit {
   handleThirdAnswer(btn: number): void {
     this.buttonClass(btn, true);
     setTimeout(() => {
-      this.router.navigate(['fase-1-4']); 
+      this.calculateFinalScore();  
+  
+      
+      const progress = {
+        userResponses: this.userResponses,
+        challengeState: this.challengeState,
+        currentActivity: this.currentActivity,
+      };
+  
+      
+      this.saveProgress(progress, 1, this.expectedResponse);
+  
+      
+      this.router.navigate(['fase-1-4'], { queryParams: { score: this.score } });
     }, 1000);
-  }
+  }  
 
   handleIncorrectAnswer(answer: string, btn: number): void {
     this.buttonClass(btn, false); 
