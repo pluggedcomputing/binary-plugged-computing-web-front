@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-screen-four-level-one',
@@ -11,10 +11,9 @@ export class ScreenFourLevelOneComponent implements OnInit {
   starsArray: number[] = [];  
   emptyStarsArray: number[] = [];  
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
-    
     this.route.queryParams.subscribe(params => {
       if (params['score']) {
         this.score = params['score'];
@@ -23,10 +22,20 @@ export class ScreenFourLevelOneComponent implements OnInit {
     });
   }
 
-  
   updateStars(): void {
     const maxStars = 5;  
     this.starsArray = Array(Math.round(this.score));  
     this.emptyStarsArray = Array(maxStars - this.starsArray.length);  
   }
+
+  resetProgress(): void {
+    localStorage.removeItem('level1Progress');
+  
+    this.router.navigate(['/fase-1-1']);
+  }  
+
+  goToNextLevel(): void {
+    this.router.navigate(['/fase-2-1']);
+  }
+  
 }
