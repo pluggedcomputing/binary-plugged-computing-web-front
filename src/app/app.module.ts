@@ -47,6 +47,7 @@ import { ScreenEightLevelEightComponent } from './components/levels/eight/screen
 import { ScreenNineLevelEightComponent } from './components/levels/eight/screen-nine-level-eight/screen-nine-level-eight.component';
 import { EmailInputComponent } from './components/email-input/email-input.component';
 import { UserFeedbackQuestionComponent } from './components/user-feedback-question/user-feedback-question.component';
+import { SettingsComponent } from './components/settings/settings.component';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
@@ -94,6 +95,7 @@ import { RouterModule } from '@angular/router';
     ScreenNineLevelEightComponent,
     EmailInputComponent,
     UserFeedbackQuestionComponent,
+    SettingsComponent,
    
   ],
   imports: [

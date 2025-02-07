@@ -1,11 +1,23 @@
 <div class="container">
   <div class="content">
     <h2>Configurações</h2>
-    <p>Aqui você pode gerenciar as configurações do aplicativo e realizar ações importantes, como excluir todos os dados armazenados.</p>
-    <button (click)="clearProgress()">Apagar Todos os Dados</button>
-    
+    <p>Aqui você pode alterar seu nome e limpar todos os dados.</p>
+
+    <div class="buttons-container">
+      <button (click)="toggleUsernameSection()">Editar nome</button>
+
+      <div *ngIf="isUsernameSectionVisible" class="username-section">
+        <label for="username">Nome do Usuário:</label>
+        <input type="text" id="username" [(ngModel)]="username" placeholder="Digite seu nome" />
+        <button class="save-btn" (click)="saveUsername()">Salvar Nome</button>
+        <button class="cancel-btn" (click)="cancelEditing()">Cancelar</button> 
+      </div>
+
+      <button *ngIf="!isUsernameSectionVisible" (click)="clearProgress()">Limpar Dados</button>
+    </div>
+
     <button (click)="navigateToLevels()" class="home-btn">
-      <i class="bi bi-house-door"></i>  
+      <i class="bi bi-house-door"></i>
     </button>
   </div>
 </div>
