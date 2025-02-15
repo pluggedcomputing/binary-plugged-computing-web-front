@@ -1,20 +1,27 @@
 <div class="container">
   <div class="content">
-    <h2>Configurações</h2>
-    <p>Aqui você pode alterar seu nome e limpar todos os dados.</p>
+    <h2 *ngIf="!isEditing">Configurações</h2>
+    <h2 *ngIf="isEditing">Editar Usuário</h2>
 
-    <div class="buttons-container">
-      <button (click)="toggleUsernameSection()">Editar nome</button>
-
-      <div *ngIf="isUsernameSectionVisible" class="username-section">
-        <label for="username">Nome do Usuário:</label>
-        <input type="text" id="username" [(ngModel)]="username" placeholder="Digite seu nome" />
-        <button class="save-btn" (click)="saveUsername()">Salvar Nome</button>
-        <button class="cancel-btn" (click)="cancelEditing()">Cancelar</button> 
-      </div>
-
-      <button *ngIf="!isUsernameSectionVisible" (click)="clearProgress()">Limpar Dados</button>
+    <div class="buttons-container" *ngIf="!isEditing">
+      <button class="edit-btn" (click)="toggleUsernameSection()">
+        Editar Usuário <i class="bi bi-person"></i>
+      </button>
+      <button class="clear-data-btn" (click)="clearProgress()">
+        Limpar Dados <i class="bi bi-trash"></i>
+      </button>
     </div>
+
+    <div *ngIf="isEditing" class="username-section">
+      <p>Aqui você pode alterar seu identificador de usuário, que pode ser um código que você recebeu, ou seu e-mail, ou seu nome.</p>
+      <label for="username">Nome do Usuário:</label>
+      <input type="text" id="username" [(ngModel)]="username" placeholder="Digite o novo nome de usuário" />
+      
+      <div class="buttons-container-edit">
+        <button class="save-btn" (click)="saveUsername()">Salvar</button>
+        <button class="cancel-btn" (click)="cancelEditing()">Cancelar</button>
+      </div>
+    </div>      
 
     <button (click)="navigateToLevels()" class="home-btn">
       <i class="bi bi-house-door"></i>

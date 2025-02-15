@@ -10,7 +10,7 @@ import { SessionStorageService } from 'src/app/service/session-storage/session-s
 export class SettingsComponent {
   username: string = '';  
   userID: string = '';    
-  isUsernameSectionVisible: boolean = false;  
+  isEditing: boolean = false;  
   originalUsername: string = '';  
 
   constructor(private router: Router, private sessionStorageService: SessionStorageService) { }
@@ -28,24 +28,15 @@ export class SettingsComponent {
   }
 
   toggleUsernameSection(): void {
-    if (this.isUsernameSectionVisible) {
-      
-      this.username = this.originalUsername;
-    } else {
-      
-      this.username = this.originalUsername;
-    }
-
-    this.isUsernameSectionVisible = !this.isUsernameSectionVisible;
+    this.isEditing = !this.isEditing;
   }
 
   saveUsername(): void {
-    
     if (this.username.trim() && this.username !== this.originalUsername) {
       localStorage.setItem(this.userID, this.username);
       this.originalUsername = this.username; 
       alert('Nome salvo com sucesso!');
-      this.isUsernameSectionVisible = false;
+      this.isEditing = false;  
     } else if (this.username === this.originalUsername) {
       alert('O nome é o mesmo que o anterior. Nenhuma alteração foi feita.');
     } else {
@@ -53,13 +44,9 @@ export class SettingsComponent {
     }
   }
 
-  clearUsername(): void {
-    this.username = '';  
-  }
-
   cancelEditing(): void {
     this.username = this.originalUsername; 
-    this.isUsernameSectionVisible = false;  
+    this.isEditing = false;  
   }
 
   clearProgress(): void {
@@ -68,8 +55,6 @@ export class SettingsComponent {
       localStorage.clear();  
       sessionStorage.clear();  
       alert('Todos os dados foram apagados!');
-      
-      
       this.router.navigate(['/email-input']);
     }
   }

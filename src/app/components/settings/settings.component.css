@@ -26,21 +26,21 @@ h2 {
   margin-bottom: 2rem;
 }
 
-button {
-  background-color: #003366;
+.edit-btn {
+  background-color: #003366;  
   color: white;
   font-size: 1.2rem;
   padding: 12px 25px;
-  border: none;
+  border: none;  
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s ease;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  width: 200px;
+  width: 210px;
 }
 
-button:hover {
-  background-color: #002244;
+.edit-btn:hover {
+  background-color: #002244;  
 }
 
 .content {
@@ -108,23 +108,65 @@ p {
   border: 1px solid #ccc;
 }
 
-.save-btn,
-.cancel-btn {
-  background-color: #003366;  
+.save-btn {
+  background-color: #4CAF50;
   color: white;
-  font-size: 0.9rem;  
-  padding: 10px 20px;  
+  font-size: 1rem;
+  padding: 8px 16px;
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  margin-bottom: 15px;
-  width: 100%;  
+  margin-bottom: 10px;
+  width: 150px;
 }
 
-.save-btn:hover,
+.cancel-btn {
+  background-color: #f44336;
+  color: white;
+  font-size: 1rem;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  width: 150px;
+}
+
+.clear-data-btn {
+  background-color: #f44336;  
+  color: white;
+  font-size: 1.2rem;  
+  padding: 12px 25px;  
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);  
+  width: 210px;  
+}
+
+.clear-data-btn:hover {
+  background-color: #d32f2f;  
+}
+
+.save-btn:hover {
+  background-color: #45a049;
+}
+
 .cancel-btn:hover {
-  background-color: #002244;  
-  transform: none;  
+  background-color: #d32f2f;
+}
+
+.clear-data-btn:hover {
+  background-color: #d32f2f;  
+}
+
+.buttons-container-edit {
+  display: flex;
+  flex-direction: row;  
+  gap: 10px;  
+  width: 100%;
+  justify-content: center; 
 }
 
 .buttons-container {
@@ -133,9 +175,4 @@ p {
   gap: 20px;  
   width: 100%;
   align-items: center;
-}
-
-.buttons-container .save-btn,
-.buttons-container .cancel-btn {
-  max-width: 100%;  
 }
