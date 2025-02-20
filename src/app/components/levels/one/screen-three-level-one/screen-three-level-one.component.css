@@ -249,6 +249,34 @@ button:not([disabled]):hover {
   border: 4px solid #d32f2f;  
 }
 
+.home-btn {
+  position: fixed; /* Garante que o botão fique fixo na tela */
+  top: 20px; /* Distância do topo */
+  right: 20px; /* Distância da direita */
+  background-color: var(--dark-blue); /* Cor do fundo */
+  padding: 15px; /* Aumenta o padding para o botão ficar maior */
+  border-radius: 50%; /* Torna o botão redondo */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100; /* Garante que o botão fique acima de outros elementos */
+}
+
+.home-btn a {
+  text-decoration: none; /* Remove o sublinhado */
+  color: white; /* Cor do ícone */
+  font-size: 2rem; /* Aumenta o tamanho do ícone */
+}
+
+.home-btn i {
+  font-size: 2rem; /* Tamanho do ícone */
+  color: white; /* Cor do ícone */
+}
+
+.home-btn:hover {
+  background-color: #0055aa; /* Cor ao passar o mouse */
+}
+
 @keyframes fadeInOut {
   0% {
     opacity: 1;
