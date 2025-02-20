@@ -51,7 +51,9 @@ export class SettingsComponent implements OnInit {
   }
   
   cancelEditing(): void {
-    this.username = this.originalUsername; 
+    this.username = this.originalUsername;
+    this.isEditing = false;  
+    this.router.navigate(['/settings']);  
   }
 
   clearProgress(): void {
