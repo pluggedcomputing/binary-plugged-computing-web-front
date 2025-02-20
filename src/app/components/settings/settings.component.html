@@ -4,13 +4,13 @@
     <h2 *ngIf="isEditing">Editar Usuário</h2>
 
     <div class="buttons-container" *ngIf="!isEditing">
-      <button class="edit-btn" (click)="toggleUsernameSection()">
+      <button class="edit-btn" (click)="goToEditUser()">
         Editar Usuário <i class="bi bi-person"></i>
-      </button>
+      </button>      
       <button class="clear-data-btn" (click)="clearProgress()">
         Limpar Dados <i class="bi bi-trash"></i>
       </button>
-    </div>
+    </div>    
 
     <div *ngIf="isEditing" class="username-section">
       <p>Aqui você pode alterar seu identificador de usuário, que pode ser um código que você recebeu, ou seu e-mail, ou seu nome.</p>
@@ -21,10 +21,15 @@
         <button class="save-btn" (click)="saveUsername()">Salvar</button>
         <button class="cancel-btn" (click)="cancelEditing()">Cancelar</button>
       </div>
-    </div>      
+    </div>                 
 
-    <button (click)="navigateToLevels()" class="home-btn">
-      <i class="bi bi-house-door"></i>
-    </button>
+    <div class="buttons-container-bottom">
+      <button class="home-btn" (click)="navigateToLevels()">
+        <i class="bi bi-house-door"></i>
+      </button>
+      <button class="settings-btn" *ngIf="isEditing" (click)="goToSettings()">
+        <i class="bi bi-gear-fill"></i>  
+      </button>
+    </div>
   </div>
 </div>

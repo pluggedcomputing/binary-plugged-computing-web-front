@@ -58,36 +58,41 @@ p {
   margin-bottom: 2rem;
 }
 
-.home-btn {
-  background-color: var(--dark-blue);  
-  color: white;
-  font-size: 2rem;
-  padding: 15px;  
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
-  z-index: 9999;
+.buttons-container-bottom {
+  display: flex;
+  justify-content: center;
+  gap: 20px; 
   position: absolute;
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
-  border-radius: 50%;  
-  width: 60px;  
-  height: 60px;  
+  z-index: 9999;
+}
+
+.settings-btn, .home-btn {
+  background-color: var(--dark-blue);  
+  color: white;
+  font-size: 2rem;
+  padding: 15px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
   display: flex;
   justify-content: center;
-  align-items: center;  
+  align-items: center;
 }
 
-.home-btn i {
-  font-size: 2rem;  
+.settings-btn i, .home-btn i {
+  font-size: 2rem;
 }
 
-.home-btn:hover {
-  background-color: #003366;  
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);  
+.settings-btn:hover, .home-btn:hover {
+  background-color: #003366;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
-
 .username-section {
   margin-bottom: 20px;
 }
