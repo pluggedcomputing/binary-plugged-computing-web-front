@@ -21,41 +21,46 @@ export class EmailInputComponent {
   ) { }
 
   submitUserID() {
-    if (!this.userID) {
+    if (!this.userID) { 
       this.submitted = true;
       return;
     }
+
+    this.sessionStorageService.setItem('userID', this.userID);
+
+    localStorage.setItem('userID', this.userID);
+
     const user: User = { userID: this.userID };
     this.userInputService.userID = this.userID;
+
     this.userInputService.saveUser(user).subscribe(
       response => {
-        this.sessionStorageService.setItem('userID', this.userID);
-        console.log("User saved successfully:", response);      
+        console.log("User saved successfully:", response);
+        this.router.navigate(['/fases']);  
       },
       error => {
         console.error("Error saving user:", error);
         alert("Houve um erro ao se conectar, você está usando o sistema offline!");
       }
     );
-    console.log(this.userID);
-    this.router.navigate(['/fases']); 
   }
 
   submitUserAnonymous() {
     const user: User = { userID: "Anonymous" };
     this.userInputService.userID = "Anonymous";
+
+    this.sessionStorageService.setItem('userID', "Anonymous");
+    localStorage.setItem("userID", "Anonymous");
+
     this.userInputService.saveUser(user).subscribe(
       response => {
-        this.sessionStorageService.setItem('userID', "Anonymous");
         console.log("User saved successfully:", response);
-        
+        this.router.navigate(['/fases']);  
       },
       error => {
         console.error("Error saving user:", error);
         alert("Houve um erro ao se conectar, você está usando o sistema offline!");
       }
     );
-    console.log("Anonymous");
-    this.router.navigate(['/fases']); 
   }
 }
