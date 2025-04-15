@@ -93,6 +93,31 @@ p {
   padding-block: 10px;
 }
 
+.home-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #003366;
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+.home-btn a {
+  text-decoration: none;
+  color: white;
+  font-size: 2rem;
+}
+
+.home-btn:hover {
+  background-color: #0055aa;
+}
+
 @media only screen and (max-width: 515px) {
   p {
     font-size: 1.2rem; 
