@@ -24,12 +24,12 @@
     </div>                 
 
     <div class="buttons-container-bottom">
+      <button class="back-btn" *ngIf="isEditing" (click)="goToSettings()">
+        <i class="bi bi-arrow-left"></i>
+      </button> 
       <button class="home-btn" (click)="navigateToLevels()">
         <i class="bi bi-house-door"></i>
-      </button>
-      <button class="settings-btn" *ngIf="isEditing" (click)="goToSettings()">
-        <i class="bi bi-gear-fill"></i>  
-      </button>
+      </button>     
     </div>
   </div>
 </div>

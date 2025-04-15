@@ -69,7 +69,7 @@ p {
   z-index: 9999;
 }
 
-.settings-btn, .home-btn {
+.back-btn, .home-btn {
   background-color: var(--dark-blue);  
   color: white;
   font-size: 2rem;
@@ -85,14 +85,15 @@ p {
   align-items: center;
 }
 
-.settings-btn i, .home-btn i {
+.back-btn i, .home-btn i {
   font-size: 2rem;
 }
 
-.settings-btn:hover, .home-btn:hover {
+.back-btn:hover, .home-btn:hover {
   background-color: #003366;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+
 .username-section {
   margin-bottom: 20px;
 }
@@ -114,7 +115,7 @@ p {
 }
 
 .save-btn {
-  background-color: #4CAF50;
+  background-color: var(--dark-blue);
   color: white;
   font-size: 1rem;
   padding: 8px 16px;
@@ -126,7 +127,7 @@ p {
 }
 
 .cancel-btn {
-  background-color: #f44336;
+  background-color: var(--dark-blue);
   color: white;
   font-size: 1rem;
   padding: 8px 16px;
@@ -138,7 +139,7 @@ p {
 }
 
 .clear-data-btn {
-  background-color: #f44336;  
+  background-color: var(--dark-blue);  
   color: white;
   font-size: 1.2rem;  
   padding: 12px 25px;  

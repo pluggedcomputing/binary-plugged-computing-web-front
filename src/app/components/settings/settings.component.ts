@@ -43,6 +43,8 @@ export class SettingsComponent implements OnInit {
       this.originalUsername = this.username; 
       alert('Nome salvo com sucesso!');
       this.isEditing = false;  
+      
+      this.router.navigate(['/fases']);  
     } else if (this.username === this.originalUsername) {
       alert('O nome é o mesmo que o anterior. Nenhuma alteração foi feita.');
     } else {
@@ -53,7 +55,7 @@ export class SettingsComponent implements OnInit {
   cancelEditing(): void {
     this.username = this.originalUsername;
     this.isEditing = false;  
-    this.router.navigate(['/settings']);  
+    this.router.navigate(['/fases']);  
   }
 
   clearProgress(): void {
