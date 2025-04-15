@@ -51,6 +51,17 @@ span {
   margin: 0 5px;
 }
 
+.feedback-message {
+  text-align: center;
+  font-size: 1.4rem;
+  color: #003366;
+  margin-top: 10px;  
+}
+.star-rating {
+  text-align: center;
+  margin-top: 20px;  
+}
+
 .nav-buttons {
   display: flex;
   justify-content: center;
@@ -119,11 +130,11 @@ a {
   }
 
   h2, h3 {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
   }
 
   .star-rating i {
-    font-size: 2.5rem;
+    font-size: 2.3rem;
   }
 
   .nav-btn {
@@ -133,15 +144,20 @@ a {
   button {
     width: 60px;
     height: 60px;
-    font-size: 1.5rem;
+    font-size: 1.4rem;
   }
 
   button i {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
   }
 
   .reiniciar-text, .home-text, .avancar-text {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
+  }
+
+  .feedback-message {
+    font-size: 1.3rem;
+    margin-top: 10px;
   }
 }
 
@@ -151,11 +167,15 @@ a {
   }
 
   span {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
   }
 
   h2, h3 {
     font-size: 1.2rem;
+  }
+
+  .star-rating i {
+    font-size: 2rem;
   }
 
   button {
@@ -166,5 +186,14 @@ a {
 
   button i {
     font-size: 1.2rem;
+  }
+
+  .reiniciar-text, .home-text, .avancar-text {
+    font-size: 1rem;
+  }
+
+  .feedback-message {
+    font-size: 1.1rem;
+    margin-top: 10px;
   }
 }

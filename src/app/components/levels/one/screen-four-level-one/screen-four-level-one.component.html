@@ -15,6 +15,7 @@
       <div class="text-box">
         <h2><strong>PARABÉNS</strong></h2>
         <span>Você concluiu a FASE 1 do aplicativo Binários!</span>
+        
         <div class="star-rating">
           <ng-container *ngFor="let star of starsArray">
             <i class="bi bi-star-fill" style="color: #003366;"></i>
@@ -22,9 +23,13 @@
           <ng-container *ngFor="let star of emptyStarsArray">
             <i class="bi bi-star" style="color: gray;"></i>
           </ng-container>
-        </div>        
-      </div>
-
+        </div>
+      
+        <div class="feedback-message">
+          <p>{{ congratulations_message }}</p>
+        </div>
+      </div>      
+      
       <div class="nav-buttons">
        
         <div class="nav-btn">

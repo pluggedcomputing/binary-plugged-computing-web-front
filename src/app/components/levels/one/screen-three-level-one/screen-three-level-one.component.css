@@ -40,8 +40,6 @@ p {
 .bi {
   color: var(--dark-blue);
   font-size: 3.5rem;
-  position: absolute;
-  top: 50%;
 }
 
 .answer-table {
@@ -59,32 +57,6 @@ p {
 
 .btn:hover, .btn:active, .btn:focus {
   background-color: var(--dark-blue);
-}
-
-/* Estilos de botão desabilitado */
-button:disabled {
-  background-color: #d3d3d3; 
-  color: #808080; 
-  cursor: not-allowed; 
-}
-
-button[disabled].correct {
-  background-color: #4CAF50; 
-  color: white;
-}
-
-button[disabled].incorrect {
-  background-color: #f44336; 
-  color: white;
-}
-
-button[disabled]:not(.correct):not(.incorrect) {
-  background-color: #d3d3d3; 
-  color: #808080;
-}
-
-button:not([disabled]):hover {
-  opacity: 0.8; 
 }
 
 .card-group {
@@ -195,31 +167,41 @@ button:not([disabled]):hover {
   color: var(--dark-blue);
 }
 
+.btn {
+  background-color: var(--dark-blue); 
+  margin-top: 0.5rem;
+  font-size: 1.4rem;
+  padding-inline: 10px;
+  padding-block: 10px;
+  border-radius: 4px !important;
+  cursor: pointer; 
+}
+
+.btn:hover, .btn:active, .btn:focus {
+  background-color: var(--dark-blue);
+}
+
 .correct {
   background-color: var(--answer-green);
-  border: 2px solid #388E3C;  
 }
 
 .correct:hover, .correct:focus {
   background-color: var(--answer-green);
-  border: 2px solid #2E7D32;
 }
 
 .incorrect {
   background-color: var(--answer-red);
-  border: 2px solid #D32F2F;  
 }
 
 .incorrect:hover, .incorrect:focus {
   background-color: var(--answer-red);
-  border: 2px solid #C62828;
 }
 
 .toast-container {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 15px;  
+  gap: 15px;
   position: fixed;
   top: 20px;
   right: 20px;
@@ -228,65 +210,50 @@ button:not([disabled]):hover {
 
 .toast-container .toast {
   color: white;
-  padding: 20px 25px;  
-  border-radius: 12px;  
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);  
-  animation: fadeInOut 4s ease-in-out forwards;  
-  min-width: 300px;  
+  padding: 20px 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  animation: fadeInOut 4s ease-in-out forwards;
+  min-width: 300px;
   margin-bottom: 15px;
-  font-size: 1.8rem;  
-  font-weight: bold;  
-  text-align: center;  
+  font-size: 1.8rem;
+  font-weight: bold;
+  text-align: center;
 }
 
 .toast-container .success {
-  background-color: #4caf50 !important;  
-  border: 4px solid #388e3c;  
+  background-color: #4caf50 !important;
+  border: 4px solid #388e3c;
 }
 
 .toast-container .error {
-  background-color: #f44336 !important;  
-  border: 4px solid #d32f2f;  
+  background-color: #f44336 !important;
+  border: 4px solid #d32f2f;
 }
 
 .home-btn {
-  position: fixed; /* Garante que o botão fique fixo na tela */
-  top: 20px; /* Distância do topo */
-  right: 20px; /* Distância da direita */
-  background-color: var(--dark-blue); /* Cor do fundo */
-  padding: 15px; /* Aumenta o padding para o botão ficar maior */
-  border-radius: 50%; /* Torna o botão redondo */
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #003366;
+  padding: 15px;
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 100; /* Garante que o botão fique acima de outros elementos */
+  z-index: 100;
 }
 
 .home-btn a {
-  text-decoration: none; /* Remove o sublinhado */
-  color: white; /* Cor do ícone */
-  font-size: 2rem; /* Aumenta o tamanho do ícone */
-}
-
-.home-btn i {
-  font-size: 2rem; /* Tamanho do ícone */
-  color: white; /* Cor do ícone */
+  text-decoration: none;
+  color: white;
+  font-size: 2rem;
 }
 
 .home-btn:hover {
-  background-color: #0055aa; /* Cor ao passar o mouse */
-}
-
-@keyframes fadeInOut {
-  0% {
-    opacity: 1;
-  }
-  90% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
+  background-color: #0055aa;
 }
 
 @media only screen and (max-width: 515px) {

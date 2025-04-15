@@ -1,8 +1,8 @@
+import { ToastService } from '../../toast.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { BinariosGameService } from 'src/app/service/binarios-game/binarios-game.service'; 
-import { ToastService } from '../../toast.service';
 
 @Component({
   selector: 'app-screen-three-level-one',
@@ -20,11 +20,6 @@ import { ToastService } from '../../toast.service';
 export class ScreenThreeLevelOneComponent implements OnInit {
   userResponses: string[] = []; 
   score: number = 0; 
-  challengeState: { [key: string]: { allButtonsDisabled: boolean } } = {
-    '1': { allButtonsDisabled: false },
-    '2': { allButtonsDisabled: false },
-    '3': { allButtonsDisabled: false },
-  };
   currentActivity: number = 1;
 
   flip1: string = 'inactive';
@@ -67,95 +62,45 @@ export class ScreenThreeLevelOneComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    
-    this.phaseActivity = '1';
-    this.numberActivity = '1';
-  
-    
-    const savedProgress = this.binariosGameService.getProgress(1);
-    
-    if (savedProgress) {
-      this.userResponses = savedProgress.userResponses || [];
-      this.score = savedProgress.score || 0;
-      this.challengeState = savedProgress.challengeState || {
-        '1': { allButtonsDisabled: false },
-        '2': { allButtonsDisabled: false },
-        '3': { allButtonsDisabled: false },
-      };
-      this.currentActivity = savedProgress.currentActivity || 1;
-  
-      
-      for (let key in this.challengeState) {
-        if (this.challengeState[key].allButtonsDisabled) {
-          
-          this.challengeState[key].allButtonsDisabled = true;
-        }
-      }
-    } else {
-      
-      this.userResponses = [];
-      this.score = 0;
-      this.challengeState = {
-        '1': { allButtonsDisabled: false },
-        '2': { allButtonsDisabled: false },
-        '3': { allButtonsDisabled: false },
-      };
-      this.currentActivity = 1;
-    }
-  }  
+    this.toastService.clear();
+    this.answers.sort(() => Math.random() - 0.5);
+    this.idUser = localStorage.getItem('userID') || 'Default Data';
+  }
 
-  saveProgress(progress: any, level: number, expectedResponse: string): void {
-    
-    const progressWithScore = {
-      ...progress,
-      score: this.score,  
-    };
-  
-    
-    this.binariosGameService.saveProgress(
-      progressWithScore.userResponses,
-      progressWithScore.score,  
-      progressWithScore.challengeState,
-      progressWithScore.currentActivity,
-      expectedResponse,
-      level
-    );
-  }  
+  toggleFlip(card: number): void {
+    if (card === 1) {
+      this.flip1 = this.flip1 === 'inactive' ? 'active' : 'inactive';
+    } else if (card === 2) {
+      this.flip2 = this.flip2 === 'inactive' ? 'active' : 'inactive';
+    } else if (card === 4) {
+      this.flip4 = this.flip4 === 'inactive' ? 'active' : 'inactive';
+    } else if (card === 8) {
+      this.flip8 = this.flip8 === 'inactive' ? 'active' : 'inactive';
+    } else if (card === 16) {
+      this.flip16 = this.flip16 === 'inactive' ? 'active' : 'inactive';
+    }
+    this.toggleBynaries();
+  }
 
   processAnswer(answer: string, btn: number): void {
     
     this.userResponses.push(answer);
-  
+    
     const isCorrect = (answer === this.expectedResponse);
-  
+    
     if (isCorrect) {
-      
       this.buttonClass(btn, true);
-      this.toastService.show('Parabéns!', 'success');
-      this.challengeState[this.numberActivity].allButtonsDisabled = true;
-  
-      setTimeout(() => {
-        this.toastService.clear(); 
-      }, 1000);
-  
+      this.toastService.show('Parabéns!', 'success'); 
     } else {
-      
-      this.buttonClass(btn, false);
-      this.toastService.show('Tente outra vez.', 'error');
-  
-      setTimeout(() => {
-        this.toastService.clear(); 
-      }, 1000);
-  
-      this.challengeState[this.numberActivity].allButtonsDisabled = false;
+      this.handleIncorrectAnswer(answer, btn);
     }
   
     const progress = {
       userResponses: this.userResponses,
-      challengeState: this.challengeState,
       currentActivity: this.currentActivity,
     };
-    this.saveProgress(progress, 1, this.expectedResponse);  
+  
+    this.saveProgress(progress, 1, this.expectedResponse, this.currentActivity);  
   
     if (isCorrect) {
       setTimeout(() => {
@@ -168,95 +113,88 @@ export class ScreenThreeLevelOneComponent implements OnInit {
         }
       }, 1000);
     }
-  }  
-  
-  calculateFinalScore(): void {
-    const totalQuestions = 3; 
-    const totalAttempts = this.userResponses.length; 
-    const correctAnswers = totalQuestions; 
-  
-    
-    const totalErrors = totalAttempts - correctAnswers;
-  
-    
-    const errorPercentage = totalErrors / totalAttempts;
-  
-    
-    const maxStars = 5;
-    const score = Math.max(1, Math.round((1 - errorPercentage) * maxStars));
-  
-    
-    this.score = score;
-  
-    console.log('Score final:', this.score);  
-  }  
-  
-  handleFirstAnswer(btn: number): void {
-    this.buttonClass(btn, true);
-    setTimeout(() => {
-      this.answers = ['24', '20', '32', '18'];
-      this.question = 'Quantos pontos teria o próximo cartão à esquerda?';
-      this.numberActivity = '2';
-      this.expectedResponse = '32';
-      this.answers.sort(() => Math.random() - 0.5);
-      this.challengeState[this.numberActivity] = { allButtonsDisabled: false };
-      
-      
-      this.isAnswered = false;
-    }, 1000);
-  }
-  
-  handleSecondAnswer(btn: number): void {
-    this.buttonClass(btn, true);
-    setTimeout(() => {
-      this.answers = ['01101', '10001', '10011', '01001'];
-      this.question = 'Como seria o número 17 em binário?';
-      this.numberActivity = '3';
-      this.expectedResponse = '10001';
-      this.answers.sort(() => Math.random() - 0.5);
-      this.challengeState[this.numberActivity] = { allButtonsDisabled: false };
-  
-      
-      this.isAnswered = false;
-    }, 1000);
   }
 
-  handleThirdAnswer(btn: number): void {
-    this.buttonClass(btn, true);
-    setTimeout(() => {
-      this.calculateFinalScore();  
-  
-      
-      const progress = {
-        userResponses: this.userResponses,
-        challengeState: this.challengeState,
-        currentActivity: this.currentActivity,
-      };
-  
-      
-      this.saveProgress(progress, 1, this.expectedResponse);
-  
-      
-      this.router.navigate(['fase-1-4'], { queryParams: { score: this.score } });
-    }, 1000);
-  }  
-
-  handleIncorrectAnswer(answer: string, btn: number): void {
-    this.buttonClass(btn, false); 
-    this.userResponses.push(answer); 
-    this.toastService.show('Tente outra vez.', 'error'); 
-  
-    
-    this.challengeState[this.numberActivity].allButtonsDisabled = false;
-  
-    const progress = {
-      userResponses: this.userResponses,
-      score: this.score,
-      challengeState: this.challengeState,
-      currentActivity: this.currentActivity,
+  saveProgress(progress: any, level: number, expectedResponse: string, currentActivity: number): void {
+    const progressWithScore = {
+      ...progress,
+      score: this.score,  
     };
-    this.saveProgress(progress, 1, this.expectedResponse); 
-  }
+  
+    this.binariosGameService.saveProgress(
+      progressWithScore.userResponses,  
+      progressWithScore.score,          
+      currentActivity,                  
+      expectedResponse,                
+      1                            
+    );
+}
+
+handleIncorrectAnswer(answer: string, btn: number): void {
+  this.buttonClass(btn, false);
+  this.toastService.show('Tente outra vez.', 'error'); 
+  this.attempts += 1;
+  console.log(this.attempts);
+
+  this.saveProgress({userResponses: this.userResponses}, 1, this.expectedResponse, this.currentActivity);
+}
+
+handleFirstAnswer(btn: number): void {
+  this.buttonClass(btn, true);
+  setTimeout(() => {
+    this.answers = ['24', '20', '32', '18'];
+    this.question = 'Quantos pontos teria o próximo cartão à esquerda?';
+    this.numberActivity = '2';
+    this.expectedResponse = '32';
+    this.answers.sort(() => Math.random() - 0.5);
+
+    const progress = { userResponses: this.userResponses };
+    this.saveProgress(progress, 1, this.expectedResponse, this.currentActivity);
+  }, 1000);
+}
+
+handleSecondAnswer(btn: number): void {
+  this.buttonClass(btn, true);
+  setTimeout(() => {
+    this.answers = ['01101', '10001', '10011', '01001'];
+    this.question = 'Como seria o número 17 em binário?';
+    this.numberActivity = '3';
+    this.expectedResponse = '10001';
+    this.answers.sort(() => Math.random() - 0.5);
+
+    const progress = { userResponses: this.userResponses };
+    this.saveProgress(progress, 1, this.expectedResponse, this.currentActivity);
+  }, 1000);
+}
+
+handleThirdAnswer(btn: number): void {
+  this.buttonClass(btn, true);
+  setTimeout(() => {
+    this.calculateFinalScore();  
+    this.router.navigate(['fase-1-4'], { queryParams: { score: this.score } });
+  }, 1000);
+}
+
+calculateFinalScore(): void {
+  const totalQuestions = 3; 
+  const totalAttempts = this.userResponses.length; 
+  const correctAnswers = totalQuestions; 
+
+  
+  const totalErrors = totalAttempts - correctAnswers;
+
+  
+  const errorPercentage = totalErrors / totalAttempts;
+
+  
+  const maxStars = 5;
+  const score = Math.max(1, Math.round((1 - errorPercentage) * maxStars));
+
+  
+  this.score = score;
+
+  console.log('Score final:', this.score);  
+}  
 
   buttonClass(button: number, status: boolean): void {
     if (button === 1) {
@@ -275,21 +213,6 @@ export class ScreenThreeLevelOneComponent implements OnInit {
       this.btnClass4 = status ? 'correct' : 'incorrect';
       setTimeout(() => { this.btnClass4 = ''; }, 1000);
     }
-  }
-
-  toggleFlip(card: number): void {
-    if (card == 1) {
-      this.flip1 = this.flip1 === 'inactive' ? 'active' : 'inactive';
-    } else if (card == 2) {
-      this.flip2 = this.flip2 === 'inactive' ? 'active' : 'inactive';
-    } else if (card == 4) {
-      this.flip4 = this.flip4 === 'inactive' ? 'active' : 'inactive';
-    } else if (card == 8) {
-      this.flip8 = this.flip8 === 'inactive' ? 'active' : 'inactive';
-    } else if (card == 16) {
-      this.flip16 = this.flip16 === 'inactive' ? 'active' : 'inactive';
-    }
-    this.toggleBynaries();
   }
 
   toggleBynaries(): void {
