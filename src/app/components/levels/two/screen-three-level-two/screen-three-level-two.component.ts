@@ -1,8 +1,8 @@
-import { ToastService } from '../../toast.service'; 
+import { ToastService } from '../../toast.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms'; 
 import { BinariosGameService } from 'src/app/service/binarios-game/binarios-game.service';
 
 @Component({
@@ -11,34 +11,14 @@ import { BinariosGameService } from 'src/app/service/binarios-game/binarios-game
   styleUrls: ['./screen-three-level-two.component.css'],
   animations: [
     trigger('flipState', [
-      state(
-        'active',
-        style({
-          transform: 'rotateY(179deg)',
-        })
-      ),
-      state(
-        'inactive',
-        style({
-          transform: 'rotateY(0)',
-        })
-      ),
+      state('active', style({ transform: 'rotateY(179deg)' })),
+      state('inactive', style({ transform: 'rotateY(0)' })),
       transition('active => inactive', animate('500ms ease-out')),
       transition('inactive => active', animate('500ms ease-in')),
     ]),
-  ],
+  ]
 })
 export class ScreenThreeLevelTwoComponent implements OnInit {
-  userResponses: string[] = []; 
-  score: number = 0; 
-  challengeState: { [key: string]: { allButtonsDisabled: boolean } } = {
-    '1': { allButtonsDisabled: false },
-    '2': { allButtonsDisabled: false },
-    '3': { allButtonsDisabled: false },
-    '4': { allButtonsDisabled: false },
-  };
-  currentActivity: number = 1; 
-
   flip1: string = 'inactive';
   flip2: string = 'active';
   flip4: string = 'active';
@@ -60,12 +40,18 @@ export class ScreenThreeLevelTwoComponent implements OnInit {
   inputType: boolean = false;
 
   attempts: number = 0;
+  userResponses: string[] = [];  
+  score: number = 0;  
+  starsArray: number[] = [];  
+  emptyStarsArray: number[] = [];  
+  congratulations_message: string = '';  
 
   
   idUser: string = 'Default Data'; 
   idApp: string = 'WEB-BINARIOS 1.0';
   phaseActivity: string = '2';
-  numberActivity: string = '1';
+  numberActivity: number = 1;  
+  typeOfQuestion: string = 'MULTIPLA ESCOLHA';
   expectedResponse: string = '19';
   dateResponse: Date;
 
@@ -77,63 +63,25 @@ export class ScreenThreeLevelTwoComponent implements OnInit {
   constructor(
     private router: Router,
     public toastService: ToastService,
-    private fb: FormBuilder,
-    private binariosGameService: BinariosGameService 
+    private binariosGameService: BinariosGameService,
+    private fb: FormBuilder 
   ) {
     this.dateResponse = new Date();
   }
 
   ngOnInit(): void {
-    
-    this.phaseActivity = '2';
-    this.numberActivity = '1';
-    
-    const savedProgress = this.binariosGameService.getProgress(2);
-    if (savedProgress) {
-      this.userResponses = savedProgress.userResponses || [];
-      this.score = savedProgress.score || 0;
-      this.challengeState = savedProgress.challengeState || {
-        '1': { allButtonsDisabled: false },
-        '2': { allButtonsDisabled: false },
-        '3': { allButtonsDisabled: false },
-        '4': { allButtonsDisabled: false },
-      };
-      this.currentActivity = savedProgress.currentActivity || 1;
-    } else {
-      this.userResponses = [];
-      this.score = 0;
-      this.challengeState = {
-        '1': { allButtonsDisabled: false },
-        '2': { allButtonsDisabled: false },
-        '3': { allButtonsDisabled: false },
-        '4': { allButtonsDisabled: false },
-      };
-      this.currentActivity = 1;
-    }
-  }  
+    this.toastService.clear();
+    this.createForm();
+    this.answers.sort(() => Math.random() - 0.5);
+  }
 
   createForm() {
-    
     this.answer = this.fb.group({
-      text: ['', [Validators.required]], 
+      text: ['', [Validators.required]],
     });
   }
 
-  saveProgress(progress: any, level: number, expectedResponse: string): void {
-
-  
-  this.binariosGameService.saveProgress(
-    progress.userResponses, 
-    progress.score, 
-    progress.challengeState, 
-    progress.currentActivity, 
-    expectedResponse, 
-    level 
-  ); 
-}
-
   toggleFlip(card: number): void {
-    
     if (card == 1) {
       this.flip1 = this.flip1 == 'inactive' ? 'active' : 'inactive';
     } else if (card == 2) {
@@ -149,74 +97,67 @@ export class ScreenThreeLevelTwoComponent implements OnInit {
   }
 
   processAnswer(answer: string, btn: number): void {
-    
     this.userResponses.push(answer);
-  
-    const isCorrect = (answer === this.expectedResponse);
-  
+
+    const isCorrect = answer === this.expectedResponse;
+
     if (isCorrect) {
-      
       this.buttonClass(btn, true);
       this.toastService.show('Parabéns!', 'success');
-      this.challengeState[this.numberActivity].allButtonsDisabled = true;
-  
+    } else {
+      this.handleIncorrectAnswer(answer, btn);
+    }
+
+    const progress = {
+      userResponses: this.userResponses,
+      currentActivity: this.numberActivity,
+    };
+
+    this.saveProgress(progress, 2, this.expectedResponse, this.numberActivity);
+
+    if (isCorrect) {
       setTimeout(() => {
-        this.toastService.clear(); 
-      }, 1000);
-  
-      const progress = {
-        userResponses: this.userResponses,
-        score: this.score,
-        challengeState: this.challengeState,
-        currentActivity: this.currentActivity,
-      };
-  
-      this.binariosGameService.saveProgress(
-        this.userResponses,
-        this.score,
-        this.challengeState,
-        this.currentActivity,
-        this.expectedResponse,
-        2 
-      );
-  
-      setTimeout(() => {
-        if (this.numberActivity === '1') {
+        if (this.numberActivity == 1) {
           this.handleFirstAnswer(btn);
-        } else if (this.numberActivity === '2') {
+        } else if (this.numberActivity == 2) {
           this.handleSecondAnswer(btn);
-        } else if (this.numberActivity === '3') {
+        } else if (this.numberActivity == 3) {
           this.handleThirdAnswer(btn);
-        } else if (this.numberActivity === '4') {
+        } else if (this.numberActivity == 4) {
           this.handleFourthAnswer(btn);
         }
       }, 1000);
-    } else {
-
-      this.buttonClass(btn, false);
-      this.toastService.show('Tente outra vez.', 'error');
-  
-      setTimeout(() => {
-        this.toastService.clear(); 
-      }, 1000);
-  
-      this.challengeState[this.numberActivity].allButtonsDisabled = false;
     }
-  
-    const progress = {
-      userResponses: this.userResponses,
-      challengeState: this.challengeState,
-      currentActivity: this.currentActivity,
+  }
+
+  saveProgress(progress: any, level: number, expectedResponse: string, currentActivity: number): void {
+    const progressWithScore = {
+      ...progress,
+      score: this.score,
     };
-    this.saveProgress(progress, 2, this.expectedResponse);  
-  }  
+
+    this.binariosGameService.saveProgress(
+      progressWithScore.userResponses,
+      progressWithScore.score,
+      currentActivity,
+      expectedResponse,
+      2
+    );
+  }
+
+  handleIncorrectAnswer(answer: string, btn: number): void {
+    this.buttonClass(btn, false);
+    this.toastService.show('Tente outra vez.', 'error');
+    this.attempts += 1;
+    console.log(this.attempts);
+  }
 
   handleFirstAnswer(btn: number): void {
     this.buttonClass(btn, true);
     setTimeout(() => {
       this.answers = ['01101 e 00011', '10011 e 01101', '00011 e 01100', '01001 e 10001'];
       this.question = 'Os números 3 e 12 correspondem respectivamente à:';
-      this.numberActivity = '2';
+      this.numberActivity = 2; 
       this.expectedResponse = '00011 e 01100';
       this.answers.sort(() => Math.random() - 0.5);
     }, 1000);
@@ -225,11 +166,11 @@ export class ScreenThreeLevelTwoComponent implements OnInit {
   handleSecondAnswer(btn: number): void {
     this.buttonClass(btn, true);
     setTimeout(() => {
-      this.inputType = true;
+      this.typeOfQuestion = 'ABERTA';
       this.question = 'Qual é o MAIOR número decimal que você pode formar utilizando esses cinco cartões?';
-      this.numberActivity = '3';
+      this.numberActivity = 3; 
       this.expectedResponse = '31';
-      this.createForm(); 
+      this.inputType = true;
       this.answers.sort(() => Math.random() - 0.5);
     }, 1000);
   }
@@ -237,11 +178,11 @@ export class ScreenThreeLevelTwoComponent implements OnInit {
   handleThirdAnswer(btn: number): void {
     this.buttonClass(btn, true);
     setTimeout(() => {
-      this.inputType = true;
       this.question = 'Ainda utilizando os cartões, qual é o MENOR número decimal que você pode formar?';
-      this.numberActivity = '4';
+      this.numberActivity = 4; 
       this.expectedResponse = '0';
-      this.createForm(); 
+      this.createForm();
+      this.inputType = true;
       this.answers.sort(() => Math.random() - 0.5);
     }, 1000);
   }
@@ -249,34 +190,30 @@ export class ScreenThreeLevelTwoComponent implements OnInit {
   handleFourthAnswer(btn: number): void {
     this.buttonClass(btn, true);
     setTimeout(() => {
-      this.router.navigate(['fase-2-4']);
+      this.calculateFinalScore();
+      this.router.navigate(['fase-2-4'], { queryParams: { score: this.score } });
     }, 1000);
   }
 
-  handleIncorrectAnswer(answer: string, btn: number): void {
-    this.buttonClass(btn, false); 
-    this.userResponses.push(answer); 
-    this.toastService.show('Tente outra vez.', 'error'); 
-  
-    
-    this.challengeState[this.numberActivity].allButtonsDisabled = false;
-  
-    
-    const progress = {
-      userResponses: this.userResponses,
-      score: this.score,
-      challengeState: this.challengeState,
-      currentActivity: this.currentActivity,
-    };
-    this.saveProgress(progress, 2, this.expectedResponse); 
-  }   
+  calculateFinalScore(): void {
+    const totalQuestions = 4;
+    const totalAttempts = this.userResponses.length;
+    const correctAnswers = totalQuestions;
 
-  toggleBynaries(): void {
-    this.byn1 = this.flip1 === 'active' ? 0 : 1;
-    this.byn2 = this.flip2 === 'active' ? 0 : 1;
-    this.byn4 = this.flip4 === 'active' ? 0 : 1;
-    this.byn8 = this.flip8 === 'active' ? 0 : 1;
-    this.byn16 = this.flip16 === 'active' ? 0 : 1;
+
+    const totalErrors = totalAttempts - correctAnswers;
+
+
+    const errorPercentage = totalErrors / totalAttempts;
+
+
+    const maxStars = 5;
+    const score = Math.max(1, Math.round((1 - errorPercentage) * maxStars));
+
+
+    this.score = score;
+
+    console.log('Score final:', this.score);
   }
 
   buttonClass(button: number, status: boolean): void {
@@ -296,5 +233,17 @@ export class ScreenThreeLevelTwoComponent implements OnInit {
       this.btnClass4 = status ? 'correct' : 'incorrect';
       setTimeout(() => { this.btnClass4 = ''; }, 1000);
     }
+    if (button === 5) {
+      this.btnClass5 = status ? 'correct' : 'incorrect';
+      setTimeout(() => { this.btnClass5 = ''; }, 1000);
+    }
+  }
+
+  toggleBynaries(): void {
+    this.byn1 = this.flip1 === 'active' ? 0 : 1;
+    this.byn2 = this.flip2 === 'active' ? 0 : 1;
+    this.byn4 = this.flip4 === 'active' ? 0 : 1;
+    this.byn8 = this.flip8 === 'active' ? 0 : 1;
+    this.byn16 = this.flip16 === 'active' ? 0 : 1;
   }
 }

@@ -1,5 +1,7 @@
 body {
   background-color: #90CCFF;
+  height: 100vh;
+  margin: 0;
 }
 
 .content {
@@ -11,8 +13,9 @@ body {
 }
 
 .container div img {
-  width: 30%;
+  width: 25%;
   margin: 1rem;
+  max-width: 100%; 
 }
 
 .text-box {
@@ -27,14 +30,13 @@ body {
 }
 
 h3 {
-  margin-top: 4rem;
-  font-size: 2rem;
+  margin-top: 4rem !important;
 }
 
 h2, h3 {
   color: var(--dark-blue);
-  margin: 1.2rem;
-  font-size: 2.2rem;
+  margin: 1rem;
+  font-size: 2rem;
 }
 
 span {
@@ -44,21 +46,67 @@ span {
   padding: 0;
 }
 
+.star-rating i {
+  font-size: 3rem;
+  margin: 0 5px;
+}
+
+.feedback-message {
+  text-align: center;
+  font-size: 1.4rem;
+  color: #003366;
+  margin-top: 10px;  
+}
+.star-rating {
+  text-align: center;
+  margin-top: 20px;  
+}
+
 .nav-buttons {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  padding: 20px;
   position: absolute;
-  bottom: 0;
-  padding: 10px;
+  bottom: 20px;
+  width: 100%;
 }
 
 .nav-btn {
-  margin: 2%;
-  border-radius: 50%;
+  margin: 0 40px; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+button {
+  font-size: 2rem;
+  color: white;
   background-color: var(--dark-blue);
-  width: 85px;
-  height: 85px;
+  border: none;
+  border-radius: 50%;
+  width: 75px;
+  height: 75px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0055aa;
+}
+
+button i {
+  font-size: 2rem;
+}
+
+.reiniciar-text, .home-text, .avancar-text {
+  font-size: 1.4rem;
+  font-weight: normal;
+  color: #003366;
   text-align: center;
+  margin-top: 5px;
 }
 
 a {
@@ -70,23 +118,82 @@ a {
   justify-content: center;
   align-items: center;
 }
+.container div img {
+  width: 25%;
+  margin: 1rem;
+  max-width: 100%;
+}
 
-@media only screen and (max-width: 527px) {
+@media only screen and (max-width: 768px) {
   .container div img {
-    width: 70%;
-    margin: 1rem;
-  }
-
-  span {
-    font-size: 1.2rem;
-  }
-
-  .nav-btn {
-    width: 70px;
-    height: 70px;
+    width: 60%;
   }
 
   h2, h3 {
-    font-size: 1.8rem;
+    font-size: 1.4rem;
+  }
+
+  .star-rating i {
+    font-size: 2.3rem;
+  }
+
+  .nav-btn {
+    margin: 0 20px;
+  }
+
+  button {
+    width: 60px;
+    height: 60px;
+    font-size: 1.4rem;
+  }
+
+  button i {
+    font-size: 1.4rem;
+  }
+
+  .reiniciar-text, .home-text, .avancar-text {
+    font-size: 1.1rem;
+  }
+
+  .feedback-message {
+    font-size: 1.3rem;
+    margin-top: 10px;
+  }
+}
+
+@media only screen and (max-width: 527px) {
+  .container div img {
+    width: 75%;
+  }
+
+  span {
+    font-size: 1.1rem;
+  }
+
+  h2, h3 {
+    font-size: 1.2rem;
+  }
+
+  .star-rating i {
+    font-size: 2rem;
+  }
+
+  button {
+    width: 50px;
+    height: 50px;
+    font-size: 1.2rem;
+  }
+
+  button i {
+    font-size: 1.2rem;
+  }
+
+  .reiniciar-text, .home-text, .avancar-text {
+    font-size: 1rem;
+  }
+
+  .feedback-message {
+    font-size: 1.1rem;
+    margin-top: 10px;
   }
 }

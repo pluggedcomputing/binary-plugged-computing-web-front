@@ -37,6 +37,36 @@ p {
   font-size: 3.5rem;
 }
 
+.home-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: #003366;
+  padding: 15px; 
+  border-radius: 50%; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  width: 60px; 
+  height: 60px;
+}
+
+.home-btn a {
+  text-decoration: none;
+  color: white;
+  font-size: 2rem;
+}
+
+.home-btn i {
+  font-size: 2rem;
+  color: white;
+}
+
+.home-btn:hover {
+  background-color: #0055aa;
+}
+
 @media(max-width: 991px) {
   .container div img {
     width: 35%;
