@@ -116,3 +116,23 @@ a {
     font-size: 1.2rem;
   }
 }
+
+@media(max-width: 700px) {
+  p {
+    width: 75%;
+    font-size: 1.1rem;
+  }
+
+  .btn {
+    width: 75%;
+    font-size: 1.1rem;
+  }
+
+  a {
+    font-size: 1.1rem;
+  }
+
+  .container div img {
+    width: 60%;
+  }
+}
