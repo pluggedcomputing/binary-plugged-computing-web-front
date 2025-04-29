@@ -12,16 +12,57 @@
       <h3><strong>FASE 6</strong></h3>
       <img src="assets/win/win-level.png" alt="Cover">
 
-
       <div class="text-box">
         <h2><strong>PARABÉNS</strong></h2>
         <span>Você concluiu a FASE 6 do aplicativo Binários!</span>
-      </div>
+        
+        <div class="star-rating">
+          <ng-container *ngFor="let star of starsArray">
+            <i class="bi bi-star-fill" style="color: #003366;"></i>
+          </ng-container>
+          <ng-container *ngFor="let star of emptyStarsArray">
+            <i class="bi bi-star" style="color: gray;"></i>
+          </ng-container>
+        </div>
+      
+        <div class="feedback-message">
+          <p>{{ congratulations_message }}</p>
+        </div>
+      </div>      
+      
+      <div class="nav-buttons">
+       
+        <div class="nav-btn">
+          <button (click)="resetProgress()">
+            <i class="bi bi-arrow-counterclockwise"></i>
+          </button>
+          <div class="reiniciar-text">
+            Reiniciar
+          </div>
+        </div>
 
-      <div class="nav-buttons w-100">
-        <div class="nav-btn"><a routerLink="/fase-6-1"><i class="bi bi-arrow-counterclockwise"></i></a></div>
-        <div class="nav-btn"><a routerLink="/fases"><i class="bi bi-chevron-right"></i></a></div>
-      </div>
+        
+        <div class="nav-btn">
+          <a routerLink="/fases">
+            <button>
+              <i class="bi bi-house-door"></i>
+            </button>
+          </a>
+          <div class="home-text">
+            Home
+          </div>
+        </div>
+
+        
+        <div class="nav-btn">
+          <button (click)="goToNextLevel()">
+            <i class="bi bi-chevron-right"></i>
+          </button>
+          <div class="avancar-text">
+            Avançar
+          </div>
+        </div>
+      </div>      
     </div>
   </div>
 </body>
