@@ -38,7 +38,7 @@ export class ScreenFourLevelOneComponent implements OnInit {
     } else if (starsCount === 4) {
       this.congratulations_message = 'Muito bem! Quase lá!';
     } else if (starsCount === 3) {
-      this.congratulations_message = 'Bom esforço! Continue praticando!';
+      this.congratulations_message = 'Continue praticando!';
     } else if (starsCount === 2) {
       this.congratulations_message = 'Ainda dá para melhorar! Não desista!';
     } else {
