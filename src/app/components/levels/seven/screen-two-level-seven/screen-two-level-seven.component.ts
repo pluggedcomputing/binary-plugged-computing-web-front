@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastService } from '../../toast.service';
 import { BinariosGameService } from 'src/app/service/binarios-game/binarios-game.service';
+import { QuestionsService } from 'src/app/service/question/questions.service';
+import { Question } from 'src/app/models/question.model';
 
 @Component({
   selector: 'app-screen-two-level-seven',
@@ -33,47 +35,64 @@ export class ScreenTwoLevelSevenComponent implements OnInit {
   constructor(
     private router: Router,
     public toastService: ToastService,
-    private binariosGameService: BinariosGameService
+    private binariosGameService: BinariosGameService,
+    private questionsService: QuestionsService
   ) {
     this.dateResponse = new Date();
   }
 
-  ngOnInit(): void {
-    this.imageRef = 1;
-    this.toastService.clear();
-    this.answers.sort(() => Math.random() - 0.5);
+ngOnInit(): void {
+  this.imageRef = 1;
+  this.toastService.clear();
+  this.answers.sort(() => Math.random() - 0.5);
+  this.idUser = localStorage.getItem('userID') || 'Default Data';
+}
+
+processAnswer(answer: string, btn: number): void {
+  this.dateResponse = new Date();
+  this.userResponses.push(answer);
+  const isCorrect = answer === this.expectedResponse;
+
+  const question: Question = new Question(
+    this.idUser,
+    this.idApp,
+    this.phaseActivity,
+    this.currentActivity.toString(),
+    answer,
+    this.expectedResponse,
+    isCorrect,
+    this.dateResponse,
+    this.typeOfQuestion
+  );
+
+  this.questionsService.saveResponseQuestion(question).subscribe();
+
+  if (isCorrect) {
+    this.buttonClass(btn, true);
+    this.toastService.show('Parabéns!', 'success');
+  } else {
+    this.handleIncorrectAnswer(answer, btn);
   }
 
-  processAnswer(answer: string, btn: number): void {
-    this.userResponses.push(answer);
-    const isCorrect = answer === this.expectedResponse;
+  const progress = {
+    userResponses: this.userResponses,
+    currentActivity: this.currentActivity,
+  };
 
-    if (isCorrect) {
-      this.buttonClass(btn, true);
-      this.toastService.show('Parabéns!', 'success');
-    } else {
-      this.handleIncorrectAnswer(answer, btn);
-    }
+  this.saveProgress(progress, 7, this.expectedResponse, this.currentActivity);
 
-    const progress = {
-      userResponses: this.userResponses,
-      currentActivity: this.currentActivity,
-    };
-
-    this.saveProgress(progress, 7, this.expectedResponse, this.currentActivity);
-
-    if (isCorrect) {
-      setTimeout(() => {
-        if (this.currentActivity === 1) {
-          this.handleFirstAnswer(btn);
-        } else if (this.currentActivity === 2) {
-          this.handleSecondAnswer(btn);
-        } else if (this.currentActivity === 3) {
-          this.handleThirdAnswer(btn);
-        }
-      }, 1000);
-    }
+  if (isCorrect) {
+    setTimeout(() => {
+      if (this.currentActivity === 1) {
+        this.handleFirstAnswer(btn);
+      } else if (this.currentActivity === 2) {
+        this.handleSecondAnswer(btn);
+      } else if (this.currentActivity === 3) {
+        this.handleThirdAnswer(btn);
+      }
+    }, 1000);
   }
+}
 
   saveProgress(progress: any, level: number, expectedResponse: string, currentActivity: number): void {
     const progressWithScore = {

@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { ToastService } from '../../toast.service';
 import { BinariosGameService } from 'src/app/service/binarios-game/binarios-game.service';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { Question } from 'src/app/models/question.model';
+import { QuestionsService } from 'src/app/service/question/questions.service';
 
 @Component({
   selector: 'app-screen-three-level-three',
@@ -49,20 +51,22 @@ export class ScreenThreeLevelThreeComponent implements OnInit {
   byn8: number = 1;
   byn16: number = 0;
 
-  constructor(
-    private router: Router,
-    public toastService: ToastService,
-    private fb: FormBuilder,
-    private binariosGameService: BinariosGameService
-  ) {
-    this.dateResponse = new Date();
-  }
+constructor(
+  private router: Router,
+  public toastService: ToastService,
+  private fb: FormBuilder,
+  private binariosGameService: BinariosGameService,
+  private questionsService: QuestionsService // aqui
+) {
+  this.dateResponse = new Date();
+}
 
-  ngOnInit(): void {
-    this.toastService.clear();
-    this.createForm();
-    this.imageRef = 1;
-  }
+ngOnInit(): void {
+  this.toastService.clear();
+  this.createForm();
+  this.imageRef = 1;
+  this.idUser = localStorage.getItem('userID') || 'Default Data';
+}
 
   createForm() {
     this.answer = this.fb.group({
@@ -70,31 +74,46 @@ export class ScreenThreeLevelThreeComponent implements OnInit {
     });
   }
 
-  processAnswer(answer: string, btn: number): void {
-    this.userResponses.push(answer);
+processAnswer(answer: string, btn: number): void {
+  this.userResponses.push(answer);
 
-    const isCorrect = answer === this.expectedResponse;
+  const isCorrect = answer === this.expectedResponse;
 
-    if (isCorrect) {
-      this.buttonClass(true);
-      this.toastService.show('Parabéns!', 'success');
-    } else {
-      this.handleIncorrectAnswer(answer, btn);
-    }
-
-    const progress = {
-      userResponses: this.userResponses,
-      currentActivity: this.numberActivity,
-    };
-
-    this.saveProgress(progress, 3, this.expectedResponse, this.numberActivity);
-
-    if (isCorrect) {
-      setTimeout(() => {
-        this.advanceToNextQuestion();
-      }, 1000);
-    }
+  if (isCorrect) {
+    this.buttonClass(true);
+    this.toastService.show('Parabéns!', 'success');
+  } else {
+    this.handleIncorrectAnswer(answer, btn);
   }
+
+  const progress = {
+    userResponses: this.userResponses,
+    currentActivity: this.numberActivity,
+  };
+
+  this.saveProgress(progress, 3, this.expectedResponse, this.numberActivity);
+
+  // ✅ Envio da resposta ao servidor
+  const question: Question = new Question(
+    this.idUser,
+    this.idApp,
+    this.phaseActivity,
+    this.numberActivity.toString(),
+    answer,
+    this.expectedResponse,
+    isCorrect,
+    new Date(),
+    this.typeOfQuestion
+  );
+
+  this.questionsService.saveResponseQuestion(question).subscribe();
+
+  if (isCorrect) {
+    setTimeout(() => {
+      this.advanceToNextQuestion();
+    }, 1000);
+  }
+}
 
   advanceToNextQuestion() {
     if (this.numberActivity === 1) {

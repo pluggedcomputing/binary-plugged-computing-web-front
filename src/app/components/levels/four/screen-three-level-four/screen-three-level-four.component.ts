@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { ToastService } from '../../toast.service';
 import { BinariosGameService } from 'src/app/service/binarios-game/binarios-game.service';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { QuestionsService } from 'src/app/service/question/questions.service';
+import { Question } from 'src/app/models/question.model';
 
 @Component({
   selector: 'app-screen-three-level-four',
@@ -53,16 +55,18 @@ export class ScreenThreeLevelFourComponent implements OnInit {
     private router: Router,
     public toastService: ToastService,
     private fb: FormBuilder,
-    private binariosGameService: BinariosGameService
+    private binariosGameService: BinariosGameService,
+    private questionsService: QuestionsService
   ) {
     this.dateResponse = new Date();
   }
 
-  ngOnInit(): void {
-    this.toastService.clear();
-    this.createForm();
-    this.imageRef = 1;
-  }
+ngOnInit(): void {
+  this.toastService.clear();
+  this.idUser = localStorage.getItem('userID') || 'Default Data';
+  this.createForm();
+  this.imageRef = 1;
+}
 
   createForm() {
     this.answer = this.fb.group({
@@ -71,30 +75,45 @@ export class ScreenThreeLevelFourComponent implements OnInit {
   }
 
   processAnswer(answer: string, btn: number): void {
-    this.userResponses.push(answer);
+  this.userResponses.push(answer);
 
-    const isCorrect = answer === this.expectedResponse;
+  const isCorrect = answer === this.expectedResponse;
 
-    if (isCorrect) {
-      this.buttonClass(true);
-      this.toastService.show('Parabéns!', 'success');
-    } else {
-      this.handleIncorrectAnswer(answer, btn);
-    }
-
-    const progress = {
-      userResponses: this.userResponses,
-      currentActivity: this.numberActivity,
-    };
-
-    this.saveProgress(progress, 4, this.expectedResponse, this.numberActivity);
-
-    if (isCorrect) {
-      setTimeout(() => {
-        this.advanceToNextQuestion();
-      }, 1000);
-    }
+  if (isCorrect) {
+    this.buttonClass(true);
+    this.toastService.show('Parabéns!', 'success');
+  } else {
+    this.handleIncorrectAnswer(answer, btn);
   }
+
+  const progress = {
+    userResponses: this.userResponses,
+    currentActivity: this.numberActivity,
+  };
+
+  this.saveProgress(progress, 4, this.expectedResponse, this.numberActivity);
+
+  // ✅ Envio da resposta ao servidor
+  const question: Question = new Question(
+    this.idUser,
+    this.idApp,
+    this.phaseActivity,
+    this.numberActivity.toString(),
+    answer,
+    this.expectedResponse,
+    isCorrect,
+    new Date(),
+    this.typeOfQuestion
+  );
+
+  this.questionsService.saveResponseQuestion(question).subscribe();
+
+  if (isCorrect) {
+    setTimeout(() => {
+      this.advanceToNextQuestion();
+    }, 1000);
+  }
+}
 
   advanceToNextQuestion() {
     if (this.numberActivity === 1) {
@@ -288,7 +307,7 @@ export class ScreenThreeLevelFourComponent implements OnInit {
   }
   
   handleFifteenthAnswer(): void {
-    this.question = 'Qual o número decimal correspondente a esta configuração de lâmpadas?';
+    this.question = "Esses foram os números que você selecionou: 1 10 21 4 5 &nbsp;&nbsp; 5 19 20 15 21 &nbsp;&nbsp; 16 18 5 19 15. Agora vamos traduzir a mensagem do Tom?";
     this.numberActivity = 16;
     this.expectedResponse = 'ajude estou preso';
     this.imageRef = 16;

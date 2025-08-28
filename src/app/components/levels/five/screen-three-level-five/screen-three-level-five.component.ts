@@ -3,6 +3,8 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastService } from '../../toast.service';
 import { BinariosGameService } from 'src/app/service/binarios-game/binarios-game.service';
+import { QuestionsService } from 'src/app/service/question/questions.service';
+import { Question } from 'src/app/models/question.model';
 
 @Component({
   selector: 'app-screen-three-level-five',
@@ -29,20 +31,22 @@ export class ScreenThreeLevelFiveComponent implements OnInit {
   userResponses: string[] = [];  
   score: number = 0;  
 
-  constructor(
-    private router: Router,
-    public toastService: ToastService,
-    private fb: FormBuilder,
-    private binariosGameService: BinariosGameService
-  ) {
-    this.dateResponse = new Date();
-  }
+constructor(
+  private router: Router,
+  public toastService: ToastService,
+  private fb: FormBuilder,
+  private binariosGameService: BinariosGameService,
+  private questionsService: QuestionsService
+) {
+  this.dateResponse = new Date();
+}
 
-  ngOnInit(): void {
-    this.toastService.clear();
-    this.createForm();
-    this.imageRef = 1; 
-  }
+ngOnInit(): void {
+  this.toastService.clear();
+  this.idUser = localStorage.getItem('userID') || 'Default Data';
+  this.createForm();
+  this.imageRef = 1;
+}
 
   createForm() {
     this.answer = this.fb.group({
@@ -51,58 +55,84 @@ export class ScreenThreeLevelFiveComponent implements OnInit {
   }
 
   processAnswer(answer: string): void {
-    if (this.currentActivity === 1 && answer.trim() === "") {
-      this.buttonClass(false); 
-      this.toastService.show('Este campo não pode ficar em branco.', 'error');
-      this.attempts += 1;
-      return; 
-    }
-  
-    this.userResponses.push(answer);
-    let isCorrect = false;
-  
-    if (this.currentActivity === 1) {
-      let codifiedName = this.textToBinary(answer.toLowerCase());
-      this.originalName = answer.toLowerCase();
-      this.expectedResponse = `muito prazer ${this.originalName}`;
-  
-      isCorrect = true;
+  if (this.currentActivity === 1 && answer.trim() === "") {
+    this.buttonClass(false); 
+    this.toastService.show('Este campo não pode ficar em branco.', 'error');
+    this.attempts += 1;
+    return; 
+  }
+
+  this.userResponses.push(answer);
+  let isCorrect = false;
+
+  if (this.currentActivity === 1) {
+    let codifiedName = this.textToBinary(answer.toLowerCase());
+    this.originalName = answer.toLowerCase();
+    this.expectedResponse = `muito prazer ${this.originalName}`;
+
+    isCorrect = true;
+    this.buttonClass(true); 
+
+    const progress = {
+      userResponses: this.userResponses,
+      score: 0
+    };
+    this.saveProgress(progress, 5, this.expectedResponse, this.currentActivity);
+
+    const question: Question = new Question(
+      this.idUser,
+      this.idApp,
+      this.phaseActivity,
+      this.currentActivity.toString(),
+      answer,
+      this.expectedResponse,
+      isCorrect,
+      new Date(),
+      "ABERTA"
+    );
+    this.questionsService.saveResponseQuestion(question).subscribe();
+
+    setTimeout(() => {
+      this.question = `Opaaa! O Tom recebeu a sua mensagem e já te respondeu... <br> Traduza para saber o que ele te falou: <br> 01101 10101 01001 10100 01111 &nbsp;&nbsp; 10000 10010 00001 11010 00101 10010 &nbsp;&nbsp; ${codifiedName}`;
+      this.imageRef = 2;
+      this.createForm();  
+      this.advanceToNextQuestion(); 
+    }, 1000);
+  }
+
+  if (this.currentActivity === 2) {
+    isCorrect = answer.toLowerCase() === this.expectedResponse.toLowerCase();
+
+    const question: Question = new Question(
+      this.idUser,
+      this.idApp,
+      this.phaseActivity,
+      this.currentActivity.toString(),
+      answer,
+      this.expectedResponse,
+      isCorrect,
+      new Date(),
+      "ABERTA"
+    );
+    this.questionsService.saveResponseQuestion(question).subscribe();
+
+    if (isCorrect) {
       this.buttonClass(true); 
-  
-      const progress = {
-        userResponses: this.userResponses,  
-        score: 0  
-      };
-      this.saveProgress(progress, 5, this.expectedResponse, this.currentActivity);
-  
+      this.toastService.show('Parabéns!', 'success');
+      this.calculateFinalScore(); 
+
       setTimeout(() => {
-        this.question = `Opaaa! O Tom recebeu a sua mensagem e já te respondeu... <br> Traduza para saber o que ele te falou: <br> 01101 10101 01001 10100 01111 &nbsp;&nbsp; 10000 10010 00001 11010 00101 10010 &nbsp;&nbsp; ${codifiedName}`;
-        this.imageRef = 2; 
-        this.createForm();  
-        this.advanceToNextQuestion(); 
+        this.saveProgress({
+          userResponses: this.userResponses,
+          score: this.score
+        }, 5, this.expectedResponse, this.currentActivity);  
+        this.router.navigate(['fase-5-4'], { queryParams: { score: this.score } });  
       }, 1000);
-    }
-  
-    if (this.currentActivity === 2) {
-      isCorrect = answer.toLowerCase() === this.expectedResponse.toLowerCase();
-  
-      if (isCorrect) {
-        this.buttonClass(true); 
-        this.toastService.show('Parabéns!', 'success');
-        this.calculateFinalScore(); 
-  
-        setTimeout(() => {
-          this.saveProgress({
-            userResponses: this.userResponses,
-            score: this.score
-          }, 5, this.expectedResponse, this.currentActivity);  
-          this.router.navigate(['fase-5-4'], { queryParams: { score: this.score } });  
-        }, 1000);
-      } else {
-        this.handleIncorrectAnswer(answer);  
-      }
+    } else {
+      this.handleIncorrectAnswer(answer);  
     }
   }
+}
   
   advanceToNextQuestion() {
     if (this.currentActivity === 1) {

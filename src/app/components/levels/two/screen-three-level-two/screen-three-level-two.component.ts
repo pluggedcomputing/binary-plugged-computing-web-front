@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { FormBuilder, Validators } from '@angular/forms'; 
 import { BinariosGameService } from 'src/app/service/binarios-game/binarios-game.service';
+import { Question } from 'src/app/models/question.model';
+import { QuestionsService } from 'src/app/service/question/questions.service';
 
 @Component({
   selector: 'app-screen-three-level-two',
@@ -47,13 +49,12 @@ export class ScreenThreeLevelTwoComponent implements OnInit {
   congratulations_message: string = '';  
 
   
-  idUser: string = 'Default Data'; 
+  idUser: string = '';
   idApp: string = 'WEB-BINARIOS 1.0';
   phaseActivity: string = '2';
   numberActivity: number = 1;  
   typeOfQuestion: string = 'MULTIPLA ESCOLHA';
   expectedResponse: string = '19';
-  dateResponse: Date;
 
   question: string = 'A sequência em binário 10011 corresponde a que número decimal?';
   answers: string[] = ['19', '5', '13', '7'];
@@ -64,15 +65,15 @@ export class ScreenThreeLevelTwoComponent implements OnInit {
     private router: Router,
     public toastService: ToastService,
     private binariosGameService: BinariosGameService,
+    private questionsService: QuestionsService,
     private fb: FormBuilder 
-  ) {
-    this.dateResponse = new Date();
-  }
+  ) {}
 
   ngOnInit(): void {
     this.toastService.clear();
     this.createForm();
     this.answers.sort(() => Math.random() - 0.5);
+    this.idUser = localStorage.getItem('userID') || 'Default Data';
   }
 
   createForm() {
@@ -97,38 +98,53 @@ export class ScreenThreeLevelTwoComponent implements OnInit {
   }
 
   processAnswer(answer: string, btn: number): void {
-    this.userResponses.push(answer);
+  this.userResponses.push(answer);
 
-    const isCorrect = answer === this.expectedResponse;
+  const isCorrect = answer === this.expectedResponse;
 
-    if (isCorrect) {
-      this.buttonClass(btn, true);
-      this.toastService.show('Parabéns!', 'success');
-    } else {
-      this.handleIncorrectAnswer(answer, btn);
-    }
-
-    const progress = {
-      userResponses: this.userResponses,
-      currentActivity: this.numberActivity,
-    };
-
-    this.saveProgress(progress, 2, this.expectedResponse, this.numberActivity);
-
-    if (isCorrect) {
-      setTimeout(() => {
-        if (this.numberActivity == 1) {
-          this.handleFirstAnswer(btn);
-        } else if (this.numberActivity == 2) {
-          this.handleSecondAnswer(btn);
-        } else if (this.numberActivity == 3) {
-          this.handleThirdAnswer(btn);
-        } else if (this.numberActivity == 4) {
-          this.handleFourthAnswer(btn);
-        }
-      }, 1000);
-    }
+  if (isCorrect) {
+    this.buttonClass(btn, true);
+    this.toastService.show('Parabéns!', 'success');
+  } else {
+    this.handleIncorrectAnswer(answer, btn);
   }
+
+  const progress = {
+    userResponses: this.userResponses,
+    currentActivity: this.numberActivity,
+  };
+
+  this.saveProgress(progress, 2, this.expectedResponse, this.numberActivity);
+
+  // ✅ Envio da resposta ao servidor
+  const question: Question = new Question(
+    this.idUser,
+    this.idApp,
+    this.phaseActivity,
+    this.numberActivity.toString(),
+    answer,
+    this.expectedResponse,
+    isCorrect,
+    new Date(),
+    this.typeOfQuestion
+  );
+
+  this.questionsService.saveResponseQuestion(question).subscribe();
+
+  if (isCorrect) {
+    setTimeout(() => {
+      if (this.numberActivity === 1) {
+        this.handleFirstAnswer(btn);
+      } else if (this.numberActivity === 2) {
+        this.handleSecondAnswer(btn);
+      } else if (this.numberActivity === 3) {
+        this.handleThirdAnswer(btn);
+      } else if (this.numberActivity === 4) {
+        this.handleFourthAnswer(btn);
+      }
+    }, 1000);
+  }
+}
 
   saveProgress(progress: any, level: number, expectedResponse: string, currentActivity: number): void {
     const progressWithScore = {
